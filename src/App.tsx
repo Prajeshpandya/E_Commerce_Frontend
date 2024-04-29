@@ -5,7 +5,7 @@ import Loader from "./components/Loader";
 //normal import 
 // import Home from "./pages/Home";
 
-//for LAZY Loading.. 
+//for LAZY Loading.
 const Search = lazy(() => import("./pages/Search"));
 const Home = lazy(() => import("./pages/Home"));
 const Cart = lazy(() => import("./pages/Cart"));
