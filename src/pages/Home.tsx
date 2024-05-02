@@ -17,7 +17,7 @@ export default function Home() {
         </Link>
       </h1>
       <main>
-        <ProductCard productId="bada" name="MacBook" price={4545} stock={500} handler={addToCartHandler} photo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU3IgUXh_PCs1EpqTegSgxDI2zbQtz6yh__Ba5DyZ5a-W0v02jasvmt1su9iVv8R-Q4sM&usqp=CAU" />
+        <ProductCard productId="bada" name="MacBook" price={4545} stock={500} handler={addToCartHandler} photo="https://images.unsplash.com/photo-1569770218135-bea267ed7e84?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
       </main>
     </div>
   );

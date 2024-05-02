@@ -1,5 +1,5 @@
 .home{
-    padding: 2rem 5%;
+    padding: 1rem 5%;
     flex-direction: column;
     display: flex;
     height: calc(100vh - 4rem);
@@ -13,7 +13,7 @@ width: 100%;
  }
  >h1{
     @include heading(1px);
-    margin-top: 3rem;
+    margin-top: 1rem;
     @include flex(row,space-between,center)
  }
  .findmore{
@@ -32,9 +32,9 @@ width: 100%;
  }
 }
 .product_card{
-    width: 18.75rem;
-    height: 25rem;
-    padding: 1rem;
+    width: 15.75rem;
+    // height: 18rem;
+    // padding: 1rem;
     flex: none;
     @include flex(column, flex-start, center, 4px);
     position: relative;
@@ -45,7 +45,7 @@ width: 100%;
     }
   
     img {
-      @include square(calc(13.75rem - 3rem));
+      @include square(calc(12.75rem - 3rem));
       object-fit: cover;
       margin: 1rem;
     }
