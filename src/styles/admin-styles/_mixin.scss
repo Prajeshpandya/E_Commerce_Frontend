@@ -4,18 +4,17 @@
   text-transform: $case;
 }
 
-@mixin flex(
-  $dir: row,
+@mixin flex($dir: row,
   $justifyContent: center,
   $alignItems: center,
-  $gap: 1rem
-) {
+  $gap: 1rem) {
   display: flex;
   flex-direction: $dir;
   justify-content: $justifyContent;
   align-items: $alignItems;
   gap: $gap;
 }
+
 @mixin grid($col: 1fr, $gap: 1rem, $row: unset) {
   display: grid;
   grid-template-columns: $col;
@@ -29,6 +28,7 @@
   background-color: $bgColor;
   width: $w;
   outline: none;
+
 }
 
 @mixin posCenter {
@@ -45,4 +45,19 @@
 
 @mixin baseShadow() {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.384);
+}
+
+@mixin borderoutcursor() {
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+@mixin basebtn($p: 0.5 1rem, $bg, $color) {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  padding: $p;
+  background-color: $bg;
+  color: $color;
 }

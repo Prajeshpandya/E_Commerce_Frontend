@@ -6,29 +6,30 @@ import {
   FaSignOutAlt,
   FaUser,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const user = {
-  _id: "njnn",
-  role: "admin",
+  _id: "",
+  role: "",
 };
 function Header() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  
+
   const logoutHandler = () => {
     setIsOpen(false);
   };
+
   return (
     <nav className="header">
-      <Link onClick={() => setIsOpen(false)} to={"/"}>
+      <NavLink onClick={() => setIsOpen(false)} to={"/"}>
         HOME
-      </Link>
-      <Link onClick={() => setIsOpen(false)} to={"/search"}>
+      </NavLink>
+      <NavLink onClick={() => setIsOpen(false)} to={"/search"}>
         <FaSearch />
-      </Link>
-      <Link onClick={() => setIsOpen(false)} to={"/cart"}>
+      </NavLink>
+      <NavLink onClick={() => setIsOpen(false)} to={"/cart"}>
         <FaShoppingBag />
-      </Link>
+      </NavLink>
       {user?._id ? (
         <>
           <button onClick={() => setIsOpen((prev) => !prev)}>
@@ -37,15 +38,15 @@ function Header() {
           <dialog open={isOpen}>
             <div>
               {user.role === "admin" && (
-                <Link onClick={() => setIsOpen(false)} to="/admin/dashboard">
+                <NavLink onClick={() => setIsOpen(false)} to="/admin/dashboard">
                   {" "}
                   Admin
-                </Link>
+                </NavLink>
               )}
-              <Link onClick={() => setIsOpen(false)} to="/admin/orders">
+              <NavLink onClick={() => setIsOpen(false)} to="/admin/orders">
                 {" "}
                 Orders
-              </Link>
+              </NavLink>
             </div>
             <button onClick={logoutHandler}>
               <FaSignOutAlt />
@@ -53,9 +54,9 @@ function Header() {
           </dialog>
         </>
       ) : (
-        <Link to={"/login"}>
+        <NavLink to={"/login"}>
           <FaSignInAlt />
-        </Link>
+        </NavLink>
       )}
     </nav>
   );
