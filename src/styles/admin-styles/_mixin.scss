@@ -53,7 +53,7 @@
   cursor: pointer;
 }
 
-@mixin basebtn($p: 0.5 1rem, $bg, $color) {
+@mixin btn($p: 0.5 1rem, $bg, $color) {
   cursor: pointer;
   border: none;
   outline: none;
@@ -61,3 +61,4 @@
   background-color: $bg;
   color: $color;
 }
+

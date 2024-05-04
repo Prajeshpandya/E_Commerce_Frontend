@@ -39,6 +39,7 @@ $color3: rgb(0, 104, 136);
 @import "home";
 @import "cart.scss";
 @import "shipping";
+@import "login";
 @import "admin-styles/dashboard";
 @import "admin-styles/products";
 @import "admin-styles/chart";
@@ -82,7 +83,7 @@ $color3: rgb(0, 104, 136);
     position: absolute;
     left: calc(100% - 100px);
     top: 8%;
-    
+
     >div {
       @include flex(column, flex-start, center, 0.25rem)
     }
