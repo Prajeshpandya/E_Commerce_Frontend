@@ -9,7 +9,7 @@ import {
 import { NavLink } from "react-router-dom";
 
 const user = {
-  _id: "",
+  _id: "bbm",
   role: "",
 };
 function Header() {
@@ -43,7 +43,7 @@ function Header() {
                   Admin
                 </NavLink>
               )}
-              <NavLink onClick={() => setIsOpen(false)} to="/admin/orders">
+              <NavLink onClick={() => setIsOpen(false)} to="/orders">
                 {" "}
                 Orders
               </NavLink>
