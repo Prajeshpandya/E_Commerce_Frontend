@@ -55,7 +55,7 @@
     }
   }
 
-  .cart-item {
+  .cart_item {
     padding: 1rem;
     @include flex(row, flex-start, center, 3rem);
     > img {

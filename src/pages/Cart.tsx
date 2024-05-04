@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { VscError } from "react-icons/vsc";
 import CartItems from "../components/CartItems";
+import { Link } from "react-router-dom";
 
 export default function Cart() {
   const [couponCode, setCouponCode] = useState<string>("");
@@ -13,7 +14,7 @@ export default function Cart() {
         "https://m.media-amazon.com/images/I/316ArzLeJ2L._SY445_SX342_QL70_FMwebp_.jpg",
       name: "MacBook",
       price: 30000,
-      quantity: 40,
+      quantity: 4,
       stock: 10,
     },
   ];
@@ -68,6 +69,7 @@ export default function Cart() {
               Invalid Coupon <VscError />
             </span>
           ))}
+            {cartItems.length > 0 && <Link to="/shipping">Checkout</Link>}
       </aside>
     </div>
   );

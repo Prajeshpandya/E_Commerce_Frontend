@@ -9,7 +9,7 @@ type ProductProps = {
   handler: () => void;
 };
 
-const server = "";
+// const server = "";
 export default function ProductCard({
   productId,
   photo,
