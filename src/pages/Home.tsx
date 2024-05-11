@@ -34,6 +34,7 @@ import ProductCard from "../components/ProductCard";
 export default function Home() {
   const addToCartHandler = () => {};
 
+
   return (
     <div className="home">
       <section></section>
