@@ -9,7 +9,7 @@ import {
 import { NavLink } from "react-router-dom";
 
 const user = {
-  _id: "bbm",
+  _id: "",
   role: "",
 };
 function Header() {
