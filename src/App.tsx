@@ -1,8 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import Loader from "./components/Loader";
 import Header from "./components/Header";
-import {Toaster} from "react-hot-toast"
+import { Toaster } from "react-hot-toast";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase";
+import { userExist, userNotExist } from "./redux/reducer/userReducer";
+import { useDispatch } from "react-redux";
+import { getUser } from "./redux/api/UserApi";
 
 //normal import
 // import Home from "./pages/Home";
@@ -36,6 +41,21 @@ const TransactionManagement = lazy(
 );
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        console.log("loggedIn");
+        //here the getUser is from fireBase that is diffrent from ourType so we made the axios api for getUser of firebase
+        const data = await getUser(user.uid);
+        dispatch(userExist(data.user));
+      } else {
+        dispatch(userNotExist());
+      }
+    });
+  }, []);
+
   return (
     <Router>
       <Header />
@@ -91,7 +111,7 @@ function App() {
           </Route>
         </Routes>
       </Suspense>
-      <Toaster  position="bottom-center"/>
+      <Toaster position="bottom-center" />
     </Router>
   );
 }
