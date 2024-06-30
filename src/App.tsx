@@ -97,13 +97,13 @@ function App() {
 
           {/* admin routes */}
           <Route
-          element={
-            <ProtectedRoute
-              isAuthenticated={true}
-              adminRoute={true}
-              admin={user?.role === "admin" ? true : false}
-            />
-          }
+            element={
+              <ProtectedRoute
+                isAuthenticated={true}
+                adminRoute={true}
+                admin={user?.role === "admin" ? true : false}
+              />
+            }
           >
             <Route path="/admin/dashboard" element={<Dashboard />} />
             <Route path="/admin/product" element={<Products />} />

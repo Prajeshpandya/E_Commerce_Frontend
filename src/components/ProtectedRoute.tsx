@@ -16,6 +16,7 @@ const ProtectedRoute = ({
   admin,
   redirect = "/",
 }: Props) => {
+  //make this conditions false for access the childrem
   if (!isAuthenticated) return <Navigate to={redirect} />;
 
   if (adminRoute && !admin) return <Navigate to={redirect} />;

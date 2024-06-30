@@ -8,22 +8,29 @@ import {
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { User } from "../types/types";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+import toast from "react-hot-toast";
 
 // const user = {
 //   _id: "",
 //   role: "",
 // };
 
-interface PropsType{
-  user:User | null,
-
+interface PropsType {
+  user: User | null;
 }
 
-function Header({user}:PropsType) {
+function Header({ user }: PropsType) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const logoutHandler = () => {
-    setIsOpen(false);
+  const logoutHandler = async () => {
+    try {
+      await signOut(auth);
+      toast.success("Signed Out Successfully!");
+    } catch (error) {
+      toast.error("Signed Out Failed!");
+    }
   };
 
   return (
