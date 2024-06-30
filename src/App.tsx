@@ -9,6 +9,7 @@ import { userExist, userNotExist } from "./redux/reducer/userReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "./redux/api/UserApi";
 import { UserReducerInitialState } from "./types/reducer-type";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 //normal import
 // import Home from "./pages/Home";
@@ -73,10 +74,22 @@ function App() {
           <Route path="/cart" element={<Cart />} />
 
           {/* Not Logged in Route */}
-          <Route path="/login" element={<Login />} />
+
+          <Route
+            path="/login"
+            element={
+              // here if auth then we do false because if auth then the below route can not be accessed
+              <ProtectedRoute isAuthenticated={user ? false : true}>
+                <Login />
+              </ProtectedRoute>
+            }
+          />
 
           {/* Logged In User Routes */}
-          <Route>
+          {/* // here login true because we want the children route access */}
+          <Route
+            element={<ProtectedRoute isAuthenticated={user ? true : false} />}
+          >
             <Route path="/shipping" element={<Shipping />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/orders/:id" element={<OrdersDetails />} />
@@ -84,13 +97,13 @@ function App() {
 
           {/* admin routes */}
           <Route
-          // element={
-          //   <ProtectedRoute
-          //     isAuthenticated={true}
-          //     adminRoute={true}
-          //     isAdmin={true}
-          //   />
-          // }
+          element={
+            <ProtectedRoute
+              isAuthenticated={true}
+              adminRoute={true}
+              admin={user?.role === "admin" ? true : false}
+            />
+          }
           >
             <Route path="/admin/dashboard" element={<Dashboard />} />
             <Route path="/admin/product" element={<Products />} />
