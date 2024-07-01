@@ -11,7 +11,7 @@ import { getUser } from "./redux/api/UserApi";
 import { UserReducerInitialState } from "./types/reducer-type";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-//normal import
+//normal import components 
 // import Home from "./pages/Home";
 
 //for LAZY Loading.
