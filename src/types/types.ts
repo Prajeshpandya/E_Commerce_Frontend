@@ -1,3 +1,4 @@
+//this type for user that get by database
 export interface User {
     name:string,
     email:string,
