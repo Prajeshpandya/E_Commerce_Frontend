@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { UserReducerInitialState } from "../../types/reducer-type";
 import { User } from "../../types/types";
 
+//this is initial state of the slice
 const initialState: UserReducerInitialState = {
   user: null,
   loading: true,
