@@ -11,7 +11,6 @@ export const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     [productApi.reducerPath]: productApi.reducer,
     [userReducer.name]: userReducer.reducer,
-    
   },
   middleware: (defaultMid) => [
     ...defaultMid(),

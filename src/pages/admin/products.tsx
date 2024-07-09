@@ -84,7 +84,6 @@ const Products = () => {
         {isLoading ? (
           <>
             <SkeletonLoader length={5}/>
-           
           </>
         ) : (
           Table

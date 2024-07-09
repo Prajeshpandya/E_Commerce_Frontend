@@ -1,5 +1,8 @@
 import { useState } from "react";
 import ProductCard from "../components/ProductCard";
+import { useAllCategoriesQuery } from "../redux/api/ProductApi";
+import { CustomError } from "../types/api-types";
+import toast from "react-hot-toast";
 
 export default function Search() {
   const [search, setSearch] = useState("");
@@ -8,9 +11,21 @@ export default function Search() {
   const [maxPrice, setMaxPrice] = useState(1000000);
   const [page, setPage] = useState(1);
 
+  const {
+    data: categoriesResponse,
+    isLoading: loadingCategories,
+    isError,
+    error,
+  } = useAllCategoriesQuery("");
+
   const addToCartHandler = () => {};
   const isNextPage = page < 4;
-  const isPreviousPage =  page > 1  ;
+  const isPreviousPage = page > 1;
+
+  if (isError) {
+    const err = error as CustomError;
+    toast.error(err.data.message);
+  }
 
   return (
     <div className="product_search">
@@ -40,9 +55,13 @@ export default function Search() {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
-            <option value="all">All</option>
-            <option value="asc">Sample 1</option>
-            <option value="dsc">Sample 2</option>
+            <option value=""> ALL</option>
+            {!loadingCategories &&
+              categoriesResponse?.categories.map((category) => (
+                <option value={category} key={category}>
+                  {category.toUpperCase()}
+                </option>
+              ))}
           </select>
         </div>
       </aside>
@@ -66,10 +85,21 @@ export default function Search() {
           />
         </div>
         <article>
-          <button disabled={!isPreviousPage} onClick={()=>setPage(prev=>prev-1)}>Prev</button>
-          <span>{page} of {4}</span>
-          <button onClick={()=>setPage(prev =>prev+1)} disabled={!isNextPage}>Next</button>
-
+          <button
+            disabled={!isPreviousPage}
+            onClick={() => setPage((prev) => prev - 1)}
+          >
+            Prev
+          </button>
+          <span>
+            {page} of {4}
+          </span>
+          <button
+            onClick={() => setPage((prev) => prev + 1)}
+            disabled={!isNextPage}
+          >
+            Next
+          </button>
         </article>
       </main>
     </div>
