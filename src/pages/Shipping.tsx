@@ -1,9 +1,19 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import { CartReducerInitialState } from "../types/reducer-type";
+import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 export default function Shipping() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const {
+    cartItems,
+
+    total,
+  } = useSelector(
+    (state: { cartReducer: CartReducerInitialState }) => state.cartReducer
+  );
   const [shippingInfo, setShippingInfo] = useState({
     address: "",
     city: "",
@@ -12,12 +22,20 @@ export default function Shipping() {
     pinCode: "",
   });
 
-  const changeHandler = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setShippingInfo(prev=>({...prev,[e.target.name]:e.target.value}))
+  useEffect(() => {
+    if (cartItems.length <= 0) {
+      return navigate("/");
+    }
+  }, [cartItems]);
+
+  const changeHandler = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    setShippingInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
   return (
     <div className="shipping">
-      <button className="back_btn" onClick={()=>navigate("/cart")}>
+      <button className="back_btn" onClick={() => navigate("/cart")}>
         <BiArrowBack />
       </button>
       <form action="">
