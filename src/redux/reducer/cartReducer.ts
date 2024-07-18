@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CartReducerInitialState } from "../../types/reducer-type";
-import { CartItems } from "../../types/types";
+import { CartItem } from "../../types/types";
 
 const initialState: CartReducerInitialState = {
   loading: false,
@@ -23,10 +23,10 @@ export const cartReducer = createSlice({
   name: "cartReducer",
   initialState,
   reducers: {
-    addToCart: (state, action: PayloadAction<CartItems>) => {
+    addToCart: (state, action: PayloadAction<CartItem>) => {
       state.loading = true;
       const index = state.cartItems.findIndex(
-        (i) => i.productId === action.payload.productId
+        (i: any) => i.productId === action.payload.productId
       );
 
       if (index !== -1) state.cartItems[index] = action.payload;
@@ -38,7 +38,7 @@ export const cartReducer = createSlice({
     removeCartItem: (state, action: PayloadAction<string>) => {
       state.loading = true;
       state.cartItems = state.cartItems.filter(
-        (i: CartItems) => i.productId !== action.payload //return that array where the payload id's item is not present!
+        (i: CartItem) => i.productId !== action.payload //return that array where the payload id's item is not present!
       );
       state.loading = false;
     },
