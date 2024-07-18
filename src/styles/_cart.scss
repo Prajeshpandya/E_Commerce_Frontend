@@ -25,6 +25,9 @@
         outline: none;
         border-radius: 5px;
         margin-top: 2rem;
+        :disabled{
+          cursor: not-allowed;
+        }
       }
       > p {
         font-size: 1.1rem;

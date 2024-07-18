@@ -7,10 +7,13 @@ import CartItems from "../components/CartItems";
 import {
   addToCart,
   calculatePrice,
+  discountApplied,
   removeCartItem,
 } from "../redux/reducer/cartReducer";
 import { CartReducerInitialState } from "../types/reducer-type";
 import { CartItem } from "../types/types";
+import axios from "axios";
+import { server } from "../redux/store";
 
 export default function Cart() {
   const dispatch = useDispatch();
@@ -43,12 +46,25 @@ export default function Cart() {
   };
 
   useEffect(() => {
+    const {token,cancel} = axios.CancelToken.source()
     const timeOutId = setTimeout(() => {
-      if (Math.random() > 0.5) setIsValidCoupon(true);
-      else setIsValidCoupon(false);
-    }, 1000);
+      axios
+        .get(`${server}/api/v1/payment/discount?coupon=${couponCode}`,{cancelToken:token})
+        .then((res) => {
+          dispatch(discountApplied(res.data.discount));
+          setIsValidCoupon(true);
+          dispatch(calculatePrice())
+        })
+        .catch((err) => {
+          setIsValidCoupon(false);
+          dispatch(discountApplied(0));
+          dispatch(calculatePrice())
+
+        });
+    }, 500);
     return () => {
       clearTimeout(timeOutId);
+      cancel()
       setIsValidCoupon(false);
     };
   }, [couponCode]);
@@ -93,6 +109,7 @@ export default function Cart() {
         <input
           type="text"
           value={couponCode}
+          disabled={total < 1}
           onChange={(e) => setCouponCode(e.target.value)}
           placeholder="Coupon Code"
         />
