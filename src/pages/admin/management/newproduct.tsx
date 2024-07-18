@@ -5,6 +5,7 @@ import { UserReducerInitialState } from "../../../types/reducer-type";
 import { useNewProductMutation } from "../../../redux/api/ProductApi";
 import { responseToast } from "../../../utils/features";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const NewProduct = () => {
   const navigate = useNavigate();
@@ -38,14 +39,14 @@ const NewProduct = () => {
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!name || !category || !price || !stock || !photo) return;
+    if (!name || !category || !price || !stock || !photo) toast.error("Enter All Fields !");
 
     const formData = new FormData();
 
     formData.set("name", name);
     formData.set("price", price.toString());
     formData.set("stock", stock.toString());
-    formData.set("photo", photo);
+    formData.set("photo", photo!);
     formData.set("category", category);
 
     const res = await newProduct({

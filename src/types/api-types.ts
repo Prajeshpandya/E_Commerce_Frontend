@@ -38,10 +38,22 @@ export type SearchProductParameters = {
   sort: string;
   category: string;
   price: number;
-  page:number
+  page: number;
 };
 export type NewProductParameters = {
-   id: string;
-   formData:FormData;
-   
+  id: string;
+  formData: FormData;
+};
+export type SingleProductResponse = {
+  success: boolean;
+  product: Product;
+};
+export type UpdateProductParameters = {
+  userId: string;
+  productId: string;
+  formData: FormData;
+};
+export type DeleteProductParameters = {
+  userId: string;
+  productId: string;
 };
