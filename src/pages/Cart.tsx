@@ -1,27 +1,46 @@
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { VscError } from "react-icons/vsc";
-import CartItems from "../components/CartItems";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import CartItems from "../components/CartItems";
+import {
+  addToCart,
+  calculatePrice,
+  removeCartItem,
+} from "../redux/reducer/cartReducer";
+import { CartReducerInitialState } from "../types/reducer-type";
+import { CartItem } from "../types/types";
 
 export default function Cart() {
+  const dispatch = useDispatch();
+  const {
+    cartItems,
+    discount,
+    loading,
+    shippingCharges,
+    subTotal,
+    tax,
+    total,
+  } = useSelector(
+    (state: { cartReducer: CartReducerInitialState }) => state.cartReducer
+  );
+
   const [couponCode, setCouponCode] = useState<string>("");
   const [isValidCoupon, setIsValidCoupon] = useState<boolean>(false);
-  const subtotal = 4000;
-  const cartItems = [
-    {
-      productId: "djandjand",
-      photo:
-        "https://m.media-amazon.com/images/I/316ArzLeJ2L._SY445_SX342_QL70_FMwebp_.jpg",
-      name: "MacBook",
-      price: 30000,
-      quantity: 4,
-      stock: 10,
-    },
-  ];
-  const tax = Math.round(subtotal * 0.18);
-  const shippingCharges = 200;
-  const discount = 400;
-  const total = subtotal + tax + shippingCharges;
+
+  const incrementHandler = (cartItem: CartItem) => {
+    if (cartItem.quantity >= cartItem.stock)
+      return toast.error(`We have only ${cartItem.stock} in Stock!`);
+    dispatch(addToCart({ ...cartItem, quantity: cartItem.quantity + 1 }));
+  };
+  const deccrementHandler = (cartItem: CartItem) => {
+    if (cartItem.quantity <= 1) return;
+    dispatch(addToCart({ ...cartItem, quantity: cartItem.quantity - 1 }));
+  };
+  const removeHandler = (productId: string) => {
+    dispatch(removeCartItem(productId));
+  };
 
   useEffect(() => {
     const timeOutId = setTimeout(() => {
@@ -33,16 +52,36 @@ export default function Cart() {
       setIsValidCoupon(false);
     };
   }, [couponCode]);
+
+  useEffect(() => {
+    dispatch(calculatePrice());
+  }, [cartItems]);
   return (
     <div className="cart">
       <main>
-        {cartItems.map((i, index) => (
-          <CartItems key={index} cartItem={i}/>
-        ))}
+        {cartItems.length > 0 && <h1>Total Items:{cartItems.length} </h1>}
+        {cartItems.length > 0 ? (
+          cartItems.map((i, index) => (
+            <CartItems
+              removeHandler={removeHandler}
+              deccrementHandler={deccrementHandler}
+              incrementHandler={incrementHandler}
+              key={index}
+              cartItem={i}
+            />
+          ))
+        ) : (
+          <h1>No iteams Added!</h1>
+        )}
       </main>
       <aside>
-        <p>Subtotal: ₹{subtotal}</p>
-        <p>Shipping Charges: ₹{shippingCharges}</p>
+        <p>Subtotal: ₹{subTotal}</p>
+        <p>Shipping Charges: ₹{shippingCharges}</p>{" "}
+        {shippingCharges > 0 && (
+          <span style={{ color: "red", fontSize: "smaller" }}>
+            Add Item of more than ₨.1000 to Avoid Shipping Charges
+          </span>
+        )}
         <p>Tax: ₹{tax}</p>
         <p>
           Discount : <em> - ₹{discount}</em>
@@ -57,7 +96,6 @@ export default function Cart() {
           onChange={(e) => setCouponCode(e.target.value)}
           placeholder="Coupon Code"
         />
-
         {couponCode &&
           (isValidCoupon ? (
             <span className="green">
@@ -69,7 +107,7 @@ export default function Cart() {
               Invalid Coupon <VscError />
             </span>
           ))}
-            {cartItems.length > 0 && <Link to="/shipping">Checkout</Link>}
+        {cartItems.length > 0 && <Link to="/shipping">Checkout</Link>}
       </aside>
     </div>
   );
