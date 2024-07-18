@@ -47,7 +47,7 @@
         @include flex(row, flex-start, flex-start);
         flex-wrap: wrap;
         height: calc(100% - 10rem);
-        overflow-y: auto;
+        // overflow-y: hidden;
       }
       // $p: 0.5rem 1rem, $bg, $color
       article {

@@ -40,3 +40,8 @@ export type SearchProductParameters = {
   price: number;
   page:number
 };
+export type NewProductParameters = {
+   id: string;
+   formData:FormData;
+   
+};

@@ -34,7 +34,7 @@
 
 .product-management {
   @include flex(row, center, unset);
-  padding: 4rem;
+  // padding: 4rem;
 
   > section {
     overflow-y: auto;
@@ -80,7 +80,7 @@
   }
 
   > article {
-    height: 85vh;
+    height: 100vh;
     padding: 2rem;
     width: 100%;
     max-width: 400px;
@@ -97,8 +97,8 @@
       }
 
       > img {
-        @include square(5rem);
-        object-fit: cover;
+        height: 4rem;
+        width: 5rem;        object-fit: cover;
         border-radius: 5px;
       }
 

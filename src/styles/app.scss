@@ -2,6 +2,13 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
 }
 
 * {
@@ -129,7 +136,7 @@ $color3: rgb(0, 104, 136);
     }
 
     >div {
-      margin: 2rem 1rem;
+      margin: 1rem 1rem;
 
       >h5 {
         @include heading(2px);
@@ -289,11 +296,12 @@ $color3: rgb(0, 104, 136);
   }
 }
 
-.skeleton_loader{
+.skeleton_loader {
   display: flex;
   flex-direction: column;
 }
-.skeleton_shape{
+
+.skeleton_shape {
   height: 30px;
   width: 100%;
   background-color: #ddd;
@@ -313,14 +321,17 @@ $color3: rgb(0, 104, 136);
     transform: translate(-50%, -20%);
   }
 }
+
 @keyframes skeleton {
-    0%{
-      opacity: 0.6;
-    }
-    50%{
-      opacity: 1;
-    }
-    100%{
-      opacity: 0.6;
-    }
+  0% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.6;
+  }
 }
