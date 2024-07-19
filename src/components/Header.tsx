@@ -12,10 +12,6 @@ import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import toast from "react-hot-toast";
 
-// const user = {
-//   _id: "",
-//   role: "",
-// };
 
 interface PropsType {
   user: User | null;
@@ -49,7 +45,7 @@ function Header({ user }: PropsType) {
           <button onClick={() => setIsOpen((prev) => !prev)}>
             <FaUser />
           </button>
-          <dialog open={isOpen}>
+          <dialog  open={isOpen}>
             <div>
               {user.role === "admin" && (
                 <NavLink onClick={() => setIsOpen(false)} to="/admin/dashboard">

@@ -1,7 +1,8 @@
 .product_search{
     padding: 2rem;
     @include flex(row, flex-start, stretch, 2rem);
-    min-height: calc(100vh - 8.5vh);
+    // min-height: calc(100vh - 8.5vh);
+    min-height: calc(100vh - 10vh);
     overflow-x: hidden;
   
     > aside {
