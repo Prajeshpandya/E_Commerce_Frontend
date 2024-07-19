@@ -121,16 +121,18 @@ $color3: rgb(0, 104, 136);
 .not-found {
   @include flex(column);
   height: 80vh;
-  >svg{
+
+  >svg {
     font-size: 5rem;
   }
+
   >a {
-    >h1{
+    >h1 {
       text-decoration: none;
       color: black;
       font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+      line-height: 1.5;
+      font-weight: 400;
     }
   }
 }
@@ -143,6 +145,22 @@ $color3: rgb(0, 104, 136);
 //   line-height: 1.5;
 //   font-weight: 400;
 // }
+
+.checkout_container {
+  max-width: 400px;
+  width: 100%;
+  margin: auto;
+
+  >form {
+    @include flex(column, flex-start, stretch, 2rem);
+
+    >button {
+      @include btn(1rem, $color3, $color1);
+      width: 100%;
+      font-size: 1.1rem
+    }
+  }
+}
 
 .admin-container {
   @include grid(1fr 4fr, 2rem);
