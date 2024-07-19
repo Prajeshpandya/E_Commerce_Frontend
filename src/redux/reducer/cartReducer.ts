@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CartReducerInitialState } from "../../types/reducer-type";
 import { CartItem } from "../../types/types";
+import toast from "react-hot-toast";
 
 const initialState: CartReducerInitialState = {
   loading: false,

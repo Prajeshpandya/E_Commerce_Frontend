@@ -46,25 +46,26 @@ export default function Cart() {
   };
 
   useEffect(() => {
-    const {token,cancel} = axios.CancelToken.source()
+    const { token, cancel } = axios.CancelToken.source();
     const timeOutId = setTimeout(() => {
       axios
-        .get(`${server}/api/v1/payment/discount?coupon=${couponCode}`,{cancelToken:token})
+        .get(`${server}/api/v1/payment/discount?coupon=${couponCode}`, {
+          cancelToken: token,
+        })
         .then((res) => {
           dispatch(discountApplied(res.data.discount));
           setIsValidCoupon(true);
-          dispatch(calculatePrice())
+          dispatch(calculatePrice());
         })
         .catch((err) => {
           setIsValidCoupon(false);
           dispatch(discountApplied(0));
-          dispatch(calculatePrice())
-
+          dispatch(calculatePrice());
         });
     }, 500);
     return () => {
       clearTimeout(timeOutId);
-      cancel()
+      cancel();
       setIsValidCoupon(false);
     };
   }, [couponCode]);
@@ -72,10 +73,15 @@ export default function Cart() {
   useEffect(() => {
     dispatch(calculatePrice());
   }, [cartItems]);
+
+  const totalItems = cartItems.reduce(
+    (quantity, item) => quantity + item.quantity,
+    0
+  );
   return (
     <div className="cart">
       <main>
-        {cartItems.length > 0 && <h1>Total Items:{cartItems.length} </h1>}
+        {totalItems > 0 && <h1>Total Items:{totalItems} </h1>}
         {cartItems.length > 0 ? (
           cartItems.map((i, index) => (
             <CartItems

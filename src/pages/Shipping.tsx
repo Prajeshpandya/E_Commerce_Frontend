@@ -1,17 +1,12 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { CartReducerInitialState } from "../types/reducer-type";
-import { useSelector } from "react-redux";
-import toast from "react-hot-toast";
 
 export default function Shipping() {
   const navigate = useNavigate();
-  const {
-    cartItems,
-
-    total,
-  } = useSelector(
+  const { cartItems } = useSelector(
     (state: { cartReducer: CartReducerInitialState }) => state.cartReducer
   );
   const [shippingInfo, setShippingInfo] = useState({
