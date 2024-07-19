@@ -1,22 +1,34 @@
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { SkeletonLoader } from "../components/Loader";
 import ProductCard from "../components/ProductCard";
 import { useLatestProductsQuery } from "../redux/api/ProductApi";
 import { addToCart } from "../redux/reducer/cartReducer";
 import { CartItem } from "../types/types";
+import { CartReducerInitialState } from "../types/reducer-type";
 
 export default function Home() {
   const { data, isError, isLoading } = useLatestProductsQuery("");
 
   const dispatch = useDispatch();
 
+  const { cartItems } = useSelector(
+    (state: { cartReducer: CartReducerInitialState }) => state.cartReducer
+  );
+
   const addToCartHandler = (cartItem: CartItem) => {
     if (cartItem.stock < 1) return toast.error("Out of Stock!");
-    dispatch(addToCart(cartItem));
-    toast.success("Item added to Cart!")
-  }; 
+    const alreadyExist = cartItems.find(
+      (i: CartItem) => i.productId === cartItem.productId
+    );
+    if (alreadyExist) {
+      return toast.error("Item Already Exist in Cart!");
+    } else {
+      dispatch(addToCart(cartItem));
+      toast.success("Item added to Cart!");
+    }
+  };
 
   if (isError) {
     toast.error("Can not fetched the Products ");

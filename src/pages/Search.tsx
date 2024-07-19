@@ -9,7 +9,8 @@ import toast from "react-hot-toast";
 import { SkeletonLoader } from "../components/Loader";
 import { CartItem } from "../types/types";
 import { addToCart } from "../redux/reducer/cartReducer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { CartReducerInitialState } from "../types/reducer-type";
 
 export default function Search() {
   const dispatch = useDispatch();
@@ -45,10 +46,21 @@ export default function Search() {
     toast.error(err.data.message);
   }
 
+  const { cartItems } = useSelector(
+    (state: { cartReducer: CartReducerInitialState }) => state.cartReducer
+  );
+
   const addToCartHandler = (cartItem: CartItem) => {
     if (cartItem.stock < 1) return toast.error("Out of Stock!");
-    dispatch(addToCart(cartItem));
-    toast.success("Item added to Cart!");
+    const alreadyExist = cartItems.find(
+      (i: CartItem) => i.productId === cartItem.productId
+    );
+    if (alreadyExist) {
+      return toast.error("Item Already Exist in Cart!");
+    } else {
+      dispatch(addToCart(cartItem));
+      toast.success("Item added to Cart!");
+    }
   };
 
   return (

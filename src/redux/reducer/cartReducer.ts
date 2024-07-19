@@ -30,7 +30,8 @@ export const cartReducer = createSlice({
         (i: any) => i.productId === action.payload.productId
       );
 
-      if (index !== -1) state.cartItems[index] = action.payload;
+      if (index !== -1) state.cartItems[index] = action.payload; //here if already exist then replace the same item in cart but its bug!
+
       else {
         state.cartItems.push(action.payload);
         state.loading = false;
