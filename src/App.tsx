@@ -1,15 +1,15 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { lazy, Suspense, useEffect } from "react";
-import Loader, { SkeletonLoader } from "./components/Loader";
-import Header from "./components/Header";
-import { Toaster } from "react-hot-toast";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./firebase";
-import { userExist, userNotExist } from "./redux/reducer/userReducer";
+import { lazy, Suspense, useEffect } from "react";
+import { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "./redux/api/UserApi";
-import { UserReducerInitialState } from "./types/reducer-type";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import Header from "./components/Header";
+import Loader from "./components/Loader";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { auth } from "./firebase";
+import { getUser } from "./redux/api/UserApi";
+import { userExist, userNotExist } from "./redux/reducer/userReducer";
+import { UserReducerInitialState } from "./types/reducer-type";
 
 //normal import components 
 // import Home from "./pages/Home";
