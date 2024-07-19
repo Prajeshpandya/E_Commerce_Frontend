@@ -28,13 +28,14 @@
   cursor: pointer;
   border: none;
   position: absolute;
-  top: -1.2rem;
-  right: -1.2rem;
+  top: 0.8rem;
+  right: 0.8rem;
 }
 
 .product-management {
   @include flex(row, center, unset);
   // padding: 4rem;
+  margin-top: 1rem;
 
   > section {
     overflow-y: auto;
@@ -80,7 +81,7 @@
   }
 
   > article {
-    height: 100vh;
+    height: 94vh;
     padding: 2rem;
     width: 100%;
     max-width: 400px;

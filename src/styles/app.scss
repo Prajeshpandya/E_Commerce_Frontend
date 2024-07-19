@@ -118,6 +118,31 @@ $color3: rgb(0, 104, 136);
   }
 }
 
+.not-found {
+  @include flex(column);
+  height: 80vh;
+  >svg{
+    font-size: 5rem;
+  }
+  >a {
+    >h1{
+      text-decoration: none;
+      color: black;
+      font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+    }
+  }
+}
+
+// .not_found_header{
+//   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+//   text-align: center;
+//   top: 2rem;
+//   position: relative;
+//   line-height: 1.5;
+//   font-weight: 400;
+// }
 
 .admin-container {
   @include grid(1fr 4fr, 2rem);

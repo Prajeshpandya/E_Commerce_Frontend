@@ -79,5 +79,5 @@ export type MyOrdersResponse = {
 };
 export type OrderDetailsResponse = {
   success: boolean;
-  orders: Order;
+  order: Order;
 };

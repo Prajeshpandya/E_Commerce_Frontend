@@ -1,16 +1,17 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { FaTrash } from "react-icons/fa";
-import AdminSidebar from "../../../components/admin/AdminSidebar";
 import { useSelector } from "react-redux";
-import { UserReducerInitialState } from "../../../types/reducer-type";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import AdminSidebar from "../../../components/admin/AdminSidebar";
+import { SkeletonLoader } from "../../../components/Loader";
 import {
   useDeleteProductMutation,
   useProductDetailsQuery,
   useUpdateProductMutation,
 } from "../../../redux/api/ProductApi";
-import { useNavigate, useParams } from "react-router-dom";
 import { server } from "../../../redux/store";
-import { SkeletonLoader } from "../../../components/Loader";
+import { UserReducerInitialState } from "../../../types/reducer-type";
 import { responseToast } from "../../../utils/features";
 
 const Productmanagement = () => {
@@ -20,7 +21,7 @@ const Productmanagement = () => {
   );
   const params = useParams();
 
-  const { data, isLoading } = useProductDetailsQuery(params.id!);
+  const { data, isLoading, isError } = useProductDetailsQuery(params.id!);
 
   const { photo, category, name, stock, price } = data?.product || {
     photo: "",
@@ -76,8 +77,6 @@ const Productmanagement = () => {
     responseToast(res, navigate, "/admin/product");
   };
   const deleteHandler = async () => {
-   
-
     const res = await deleteProduct({
       userId: user?._id!,
       productId: data?.product._id!,
@@ -94,6 +93,17 @@ const Productmanagement = () => {
       setCategoryUpdate(data.product.category);
     }
   }, [data]);
+
+  // useEffect(() => {
+  //   if (isError) {
+  //     toast.error("Product not Found");
+  //     navigate("/admin/product");
+  //   }
+  // }, [isError, navigate]);
+
+  if (isError) {
+    return <Navigate to={"/404"} />;
+  }
 
   return (
     <div className="admin-container">

@@ -93,6 +93,19 @@ const Transaction = () => {
     "Transactions",
     rows.length > 6
   )();
+
+  // const dataComponent = (
+  //   <>
+  //     {data?.orders.length! ? (
+  //       Table
+  //     ) : (
+  //       <h2 className="not_found_header">
+  //         No Orders Found!
+  //       </h2>
+  //     )}
+  //   </>
+  // );
+
   return (
     <div className="admin-container">
       <AdminSidebar />

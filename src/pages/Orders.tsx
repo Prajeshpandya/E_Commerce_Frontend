@@ -82,13 +82,18 @@ export default function Orders() {
   return (
     <div className="container">
       <h1>My orders</h1>
-
-      {isLoading ? (
-        <>
-          <SkeletonLoader length={5} />
-        </>
+      {data?.orders.length! <= 0 ? (
+        <h1>No Order Found</h1>
       ) : (
-        Table
+        <>
+          {isLoading ? (
+            <>
+              <SkeletonLoader length={5} />
+            </>
+          ) : (
+            Table
+          )}
+        </>
       )}
     </div>
   );

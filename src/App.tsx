@@ -11,7 +11,7 @@ import { getUser } from "./redux/api/UserApi";
 import { userExist, userNotExist } from "./redux/reducer/userReducer";
 import { UserReducerInitialState } from "./types/reducer-type";
 
-//normal import components 
+//normal import components
 // import Home from "./pages/Home";
 
 //for LAZY Loading.
@@ -22,6 +22,7 @@ const Shipping = lazy(() => import("./pages/Shipping"));
 const Login = lazy(() => import("./pages/Login"));
 const Orders = lazy(() => import("./pages/Orders"));
 const OrdersDetails = lazy(() => import("./pages/OrdersDetails"));
+const NotFound = lazy(() => import("./components/NotFound"));
 
 //admin
 const Dashboard = lazy(() => import("./pages/admin/dashboard"));
@@ -128,6 +129,7 @@ function App() {
               element={<TransactionManagement />}
             />
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
       <Toaster position="top-center" />
