@@ -31,9 +31,8 @@ export const cartReducer = createSlice({
         (i: any) => i.productId === action.payload.productId
       );
 
-      if (index !== -1)
-        state.cartItems[index] =
-          action.payload; //here if already exist then replace the same item in cart but its bug! I SOLVED IT!
+      if (index !== -1) state.cartItems[index] = action.payload;
+      //here if already exist then replace the same item in cart but its bug! I SOLVED IT!
       else {
         state.cartItems.push(action.payload);
         state.loading = false;
@@ -59,6 +58,7 @@ export const cartReducer = createSlice({
         state.shippingCharges = 0;
       }
       state.tax = Math.round(state.subTotal * 0.18);
+
       state.total =
         state.subTotal + state.tax + state.shippingCharges - state.discount;
     },
@@ -68,9 +68,19 @@ export const cartReducer = createSlice({
     saveShippingInfo: (state, action: PayloadAction<ShippingInfo>) => {
       state.shippingInfo = action.payload;
     },
-    resetCart:()=>initialState
+    resetCart: () => initialState,
+    inValidateCoupon: (state) => {
+      state.discount = 0;
+    },
   },
 });
 
-export const { addToCart, removeCartItem, calculatePrice, discountApplied,saveShippingInfo,resetCart } =
-  cartReducer.actions;
+export const {
+  addToCart,
+  removeCartItem,
+  calculatePrice,
+  discountApplied,
+  saveShippingInfo,
+  resetCart,
+  inValidateCoupon,
+} = cartReducer.actions;

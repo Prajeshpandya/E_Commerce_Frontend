@@ -34,7 +34,7 @@ export default function Search() {
     error: searchProductError,
   } = useSearchProductsQuery({ search, sort, category, page, price: maxPrice });
 
-  const isNextPage = page < 4;
+  const isNextPage = page < searchProductResponse?.totalPage!;
   const isPreviousPage = page > 1;
 
   if (isError) {
@@ -112,6 +112,17 @@ export default function Search() {
 
         {productLoading ? (
           <SkeletonLoader length={10} />
+        ) : searchProductResponse?.products.length === 0 ? (
+          <h1
+            style={{
+              display: "flex",
+              top: "50%",
+              left: "51%",
+              position: "absolute",
+            }}
+          >
+            No Product Found
+          </h1>
         ) : (
           <div className="search_product_list">
             {searchProductResponse?.products.map((i) => (

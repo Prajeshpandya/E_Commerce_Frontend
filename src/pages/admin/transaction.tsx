@@ -91,7 +91,8 @@ const Transaction = () => {
     rows,
     "dashboard-product-box",
     "Transactions",
-    rows.length > 6
+    // rows.length > 4,
+    true
   )();
 
   // const dataComponent = (

@@ -22,7 +22,7 @@ function TableHOC<T extends Object>(
       columns,
       data,
       initialState: {
-        pageSize: 6,
+        pageSize: 4,
       },
     };
 

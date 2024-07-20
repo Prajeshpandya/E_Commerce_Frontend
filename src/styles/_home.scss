@@ -48,7 +48,7 @@ width: 100%;
     img {
       @include square(calc(12.75rem - 3rem));
       object-fit: cover;
-      margin: 1rem;
+      margin: 0.5rem;
     }
   
     span {

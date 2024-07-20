@@ -26,7 +26,6 @@ export default function Home() {
       return toast.error("Item Already Exist in Cart!");
     } else {
       dispatch(addToCart(cartItem));
-      console.log(cartItem.quantity, cartItem.name);
 
       toast.success("Item added to Cart!");
     }

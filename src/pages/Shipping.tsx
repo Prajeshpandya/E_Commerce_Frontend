@@ -13,11 +13,14 @@ export default function Shipping() {
 
   const { user } = useSelector((state: RootState) => state.userReducer);
 
-
   const { cartItems, total } = useSelector(
     (state: RootState) => state.cartReducer
   );
-  console.log(cartItems?.map((i)=>{console.log(i.name,i.quantity)}))
+  console.log(
+    cartItems?.map((i) => {
+      console.log(i.name, i.quantity);
+    })
+  );
   const [shippingInfo, setShippingInfo] = useState({
     address: "",
     city: "",
@@ -25,6 +28,7 @@ export default function Shipping() {
     country: "",
     pinCode: "",
   });
+  const [isLoadingShip, SetIsLoadingShip] = useState(false);
 
   useEffect(() => {
     if (cartItems.length <= 0) {
@@ -44,11 +48,12 @@ export default function Shipping() {
     dispatch(saveShippingInfo(shippingInfo));
 
     try {
+      SetIsLoadingShip(true);
       const { data } = await axios.post(
         `${server}/api/v1/payment/create`,
         {
           amount: total,
-          name:user?.name!
+          name: user?.name!,
         },
         {
           headers: {
@@ -60,9 +65,11 @@ export default function Shipping() {
       navigate("/pay", {
         state: data.clientSecret,
       });
+      SetIsLoadingShip(false);
     } catch (error) {
       console.log(error);
       toast.error("Something Went Wrong!");
+      SetIsLoadingShip(false);
     }
   };
   return (
@@ -115,7 +122,15 @@ export default function Shipping() {
           value={shippingInfo.pinCode}
           onChange={changeHandler}
         />
-        <button type="submit">Pay Now</button>
+        <button
+          type="submit"
+          disabled={isLoadingShip}
+          style={{
+            cursor: isLoadingShip ? "not-allowed" : "pointer",
+          }}
+        >
+          {isLoadingShip ? "Processing" : "Pay Now"}
+        </button>
       </form>
     </div>
   );

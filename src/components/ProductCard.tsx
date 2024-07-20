@@ -20,13 +20,16 @@ export default function ProductCard({
   handler,
 }: ProductProps) {
   const fullPhotoUrl = `${server}/${photo}`;
+
+  const formattedName = name.length > 30 ? `${name.slice(0, 30)}...` : name;
+
   return (
     //uploads\966fa9ef-87a9-4343-a774-a56ce65aa5dc.png
 
     <div className="product_card">
       <img src={`${server}/${photo}`} alt={name} />
 
-      <p>{name}</p>
+      <p>{formattedName}</p>
       <span>₹{price}</span>
       <div>
         <button

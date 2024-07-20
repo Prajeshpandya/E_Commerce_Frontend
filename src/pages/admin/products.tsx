@@ -74,7 +74,8 @@ const Products = () => {
     rows,
     "dashboard-product-box",
     "Products",
-    rows.length > 6
+    // rows.length > 3,
+    true
   )();
 
   return (
@@ -83,7 +84,7 @@ const Products = () => {
       <main>
         {isLoading ? (
           <>
-            <SkeletonLoader length={5}/>
+            <SkeletonLoader length={5} />
           </>
         ) : (
           Table
