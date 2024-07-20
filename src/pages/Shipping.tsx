@@ -17,6 +17,7 @@ export default function Shipping() {
   const { cartItems, total } = useSelector(
     (state: RootState) => state.cartReducer
   );
+  console.log(cartItems?.map((i)=>{console.log(i.name,i.quantity)}))
   const [shippingInfo, setShippingInfo] = useState({
     address: "",
     city: "",

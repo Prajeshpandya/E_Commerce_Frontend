@@ -14,7 +14,7 @@ interface DataType {
   user: string;
   amount: number;
   discount: number;
-  quantity: number;
+  quantity: number[];
   status: ReactElement;
   action: ReactElement;
 }
@@ -67,7 +67,7 @@ const Transaction = () => {
           user: i.user.name,
           amount: i.total,
           discount: i.discount,
-          quantity: i.orderItems.length,
+          quantity: i.orderItems.map((i)=>i.quantity),
           status: (
             <span
               className={

@@ -12,14 +12,18 @@ import { UserReducerInitialState } from "../types/reducer-type";
 type DataType = {
   _id: string;
   amount: number;
-  quantity: number;
+  quantity: number[];
   discount: number;
   status: ReactElement;
   action: ReactElement;
 };
 const column: Column<DataType>[] = [
   {
-    Header: "ID",
+    Header: "Name",
+    accessor: "name",
+  },
+  {
+    Header: "Order ID",
     accessor: "_id",
   },
   {
@@ -51,18 +55,31 @@ export default function Orders() {
   const { isError, isLoading, data, error } = useMyOrdersQuery(user?._id!);
 
   useEffect(() => {
-    data?.orders.map((i) =>
-      setRows([
-        {
+    if (data) {
+      setRows(
+        data?.orders.map((i) => ({
+          name:i.orderItems.map((i)=>i.name),
           _id: i._id,
           amount: i.total,
           discount: i.discount,
-          quantity: i.orderItems.length,
-          status: <span> {i.status} </span>,
+          quantity: i.orderItems.map((i)=>i.quantity),
+          status: (
+            <span
+              className={
+                i.status === "Processing"
+                  ? "red"
+                  : i.status === "Shipped"
+                  ? "green"
+                  : "purple"
+              }
+            >
+              {i.status}
+            </span>
+          ),
           action: <Link to={`/${i._id}`}>Manage</Link>,
-        },
-      ])
-    );
+        }))
+      );
+    }
   }, [data]);
 
   if (isError) {

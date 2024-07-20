@@ -35,11 +35,14 @@ export default function Cart() {
   const incrementHandler = (cartItem: CartItem) => {
     if (cartItem.quantity >= cartItem.stock)
       return toast.error(`We have only ${cartItem.stock} in Stock!`);
+    console.log(cartItem.quantity,cartItem.name)
     dispatch(addToCart({ ...cartItem, quantity: cartItem.quantity + 1 }));
+    console.log(cartItem.quantity, cartItem.name)
   };
   const deccrementHandler = (cartItem: CartItem) => {
     if (cartItem.quantity <= 1) return;
     dispatch(addToCart({ ...cartItem, quantity: cartItem.quantity - 1 }));
+    console.log(cartItem.quantity, cartItem.name)
   };
   const removeHandler = (productId: string) => {
     dispatch(removeCartItem(productId));
