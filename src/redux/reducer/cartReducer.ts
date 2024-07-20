@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CartReducerInitialState } from "../../types/reducer-type";
-import { CartItem } from "../../types/types";
+import { CartItem, ShippingInfo } from "../../types/types";
 import toast from "react-hot-toast";
+import { actions } from "react-table";
 
 const initialState: CartReducerInitialState = {
   loading: false,
@@ -30,8 +31,9 @@ export const cartReducer = createSlice({
         (i: any) => i.productId === action.payload.productId
       );
 
-      if (index !== -1) state.cartItems[index] = action.payload; //here if already exist then replace the same item in cart but its bug! I SOLVED IT!
-
+      if (index !== -1)
+        state.cartItems[index] =
+          action.payload; //here if already exist then replace the same item in cart but its bug! I SOLVED IT!
       else {
         state.cartItems.push(action.payload);
         state.loading = false;
@@ -63,8 +65,12 @@ export const cartReducer = createSlice({
     discountApplied: (state, action: PayloadAction<number>) => {
       state.discount = action.payload;
     },
+    saveShippingInfo: (state, action: PayloadAction<ShippingInfo>) => {
+      state.shippingInfo = action.payload;
+    },
+    resetCart:()=>initialState
   },
 });
 
-export const { addToCart, removeCartItem, calculatePrice, discountApplied } =
+export const { addToCart, removeCartItem, calculatePrice, discountApplied,saveShippingInfo,resetCart } =
   cartReducer.actions;

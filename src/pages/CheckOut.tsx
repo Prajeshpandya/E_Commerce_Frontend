@@ -7,61 +7,114 @@ import {
 import { loadStripe } from "@stripe/stripe-js";
 import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useNewOrderMutation } from "../redux/api/OrderApi";
+import { resetCart } from "../redux/reducer/cartReducer";
+import { RootState } from "../redux/store";
+import { NewOrderParameters } from "../types/api-types";
+import { responseToast } from "../utils/features";
 
-export default function CheckOut() {
-  const stripePromise = loadStripe(
-    "pk_test_51PRdAeSIRiLwSxTnWbKQYTLwbq9gbAd0PzyaIZHilHf2saCLRVJMPg5yrqixBZqCoKWe6HosuC7fqRP5KVECYgc600W05X96uO"
-  );
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_KEY);
 
+const CheckOutForm = () => {
+  const navigate = useNavigate();
+  const stripe = useStripe();
+  const dispatch = useDispatch();
+  const elements = useElements();
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
-  const CheckOutForm = () => {
-    const navigate = useNavigate();
-    const stripe = useStripe();
-    const elements = useElements();
+  const { user } = useSelector((state: RootState) => state.userReducer);
+  const {
+    cartItems,
+    discount,
+    shippingCharges,
+    shippingInfo,
+    subTotal,
+    tax,
+    total,
+  } = useSelector((state: RootState) => state.cartReducer);
 
-    const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      if (!stripe || !elements) return;
-      setIsProcessing(true);
+  const [newOrder] = useNewOrderMutation();
 
-      const orderData = {};
-
-      const { paymentIntent, error } = await stripe.confirmPayment({
-        elements,
-        confirmParams: { return_url: window.location.origin },
-        redirect: "if_required",
-      });
-
-      if (error) {
-        setIsProcessing(false);
-        return toast.error(error.message || "Something Went Wrong!");
-      }
-
-      if (paymentIntent.status === "succeeded") {
-        console.log("PlacingOrder");
-        navigate("/orders");
-      }
-      setIsProcessing(false);
+  const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!stripe || !elements) {
+      toast.error("Stripe.js has not yet loaded.");
+      return;
+    }
+    setIsProcessing(true);
+    const orderData: NewOrderParameters = {
+      discount,
+      orderItems: cartItems,
+      shippingCharges,
+      shippingInfo,
+      subTotal,
+      tax,
+      total,
+      user: user?._id!,
     };
 
-    return (
-      <div className="checkout_container">
-        <form onSubmit={submitHandler}>
-          <PaymentElement />
-          <button type="submit" disabled={isProcessing}>
-            {isProcessing ? "Processing" : "Pay"}
-          </button>
-        </form>
-      </div>
-    );
+    console.log(orderData);
+    const { error, paymentIntent } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: window.location.origin,
+        payment_method_data: {
+          billing_details: {
+            name: user?.name,
+            email: user?.email,
+            address: {
+              line1: shippingInfo.address,
+              city: shippingInfo.city,
+              state: shippingInfo.state,
+              postal_code: shippingInfo.pinCode,
+              country: shippingInfo.country,
+            },
+          },
+        },
+      },
+      
+      
+      redirect: "if_required",
+    });
+
+    if (error) {
+      setIsProcessing(false);
+      console.log(error);
+      return toast.error(error.message || "Something went wrong!");
+    }
+
+    if (paymentIntent && paymentIntent.status === "succeeded") {
+      const res = await newOrder(orderData);
+      dispatch(resetCart());
+      responseToast(res, navigate, "/orders");
+    }
+    setIsProcessing(false);
   };
+
+  return (
+    <div className="checkout_container">
+      <form onSubmit={submitHandler}>
+        <PaymentElement />
+        <button type="submit" disabled={isProcessing}>
+          {isProcessing ? "Processing" : "Pay"}
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default function CheckOut() {
+  const location = useLocation();
+  const clientSecret: string | undefined = location.state;
+
+  if (!clientSecret) return <Navigate to={"/shipping"} />;
+
   return (
     <Elements
       options={{
-        clientSecret:
-          "pi_3PeGNRSIRiLwSxTn0AGm9IRs_secret_aF5TerjzoCnwRIpsCvgsacfS7",
+        clientSecret,
       }}
       stripe={stripePromise}
     >

@@ -60,8 +60,11 @@ const TransactionManagement = () => {
   const [deleteOrder] = useDeleteOrderMutation();
 
   const updateHandler = async () => {
-    if (status === "Delivered") return navigate("/admin/transaction");
-    toast.error("The Order has been already Delivered!");
+    if (status === "Delivered") {
+      toast.error("The Order has been already Delivered!");
+      return navigate("/admin/transaction");
+    }
+
     const res = await updateOrder({
       userId: user?._id!,
       orderId: data?.order._id!,
