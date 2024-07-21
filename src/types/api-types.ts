@@ -22,6 +22,10 @@ export type AllProductsResponse = {
   success: boolean;
   products: Product[];
 };
+export type AllUsersResponse = {
+  success: boolean;
+  users: User[];
+};
 export type CategoriesResponse = {
   success: boolean;
   categories: [];

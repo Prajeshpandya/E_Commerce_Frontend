@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { MessageResponse, UserResponse } from "../../types/api-types";
+import { AllUsersResponse, MessageResponse, UserResponse } from "../../types/api-types";
 import { User } from "../../types/types";
 import axios from "axios";
 
@@ -17,6 +17,9 @@ export const userApi = createApi({
         body: user,
       }),
     }),
+    getAllUsers: builder.query<AllUsersResponse, string>({
+      query: (id) => (`all?id=${id}`),
+    }),
   }),
 });
 
@@ -31,4 +34,4 @@ export const getUser = async (id: string) => {
   }
 };
 
-export const { useLoginMutation } = userApi;
+export const { useLoginMutation,useGetAllUsersQuery } = userApi;

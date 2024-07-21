@@ -78,6 +78,7 @@ export default function Cart() {
     dispatch(calculatePrice());
     console.log(total);
   }, [cartItems]);
+  
   if (total < 0) {
     console.log("its minus total");
     dispatch(inValidateCoupon());
