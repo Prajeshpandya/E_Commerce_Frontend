@@ -1,5 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { AllUsersResponse, MessageResponse, UserResponse } from "../../types/api-types";
+import {
+  AllUsersResponse,
+  DeleteUserParameters,
+  MessageResponse,
+  UserResponse,
+} from "../../types/api-types";
 import { User } from "../../types/types";
 import axios from "axios";
 
@@ -8,6 +13,7 @@ export const userApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${import.meta.env.VITE_SERVER}/api/v1/user/`,
   }),
+  tagTypes: ["users"],
   endpoints: (builder) => ({
     //first argument for response and second for the User that we send..
     login: builder.mutation<MessageResponse, User>({
@@ -18,14 +24,22 @@ export const userApi = createApi({
       }),
     }),
     getAllUsers: builder.query<AllUsersResponse, string>({
-      query: (id) => (`all?id=${id}`),
+      query: (id) => `all?id=${id}`,
+      providesTags: ["users"],
+    }),
+    deleteUser: builder.mutation<MessageResponse, DeleteUserParameters>({
+      query: ({ userId, adminId }) => ({
+        url: `${userId}?id=${adminId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["users"],
     }),
   }),
 });
 
 export const getUser = async (id: string) => {
-  try { 
-    const { data }: { data: UserResponse } =await axios.get(
+  try {
+    const { data }: { data: UserResponse } = await axios.get(
       `${import.meta.env.VITE_SERVER}/api/v1/user/${id}`
     );
     return data;
@@ -34,4 +48,5 @@ export const getUser = async (id: string) => {
   }
 };
 
-export const { useLoginMutation,useGetAllUsersQuery } = userApi;
+export const { useLoginMutation, useGetAllUsersQuery, useDeleteUserMutation } =
+  userApi;

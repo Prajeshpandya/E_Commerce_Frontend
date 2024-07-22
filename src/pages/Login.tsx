@@ -7,10 +7,12 @@ import { auth } from "../firebase";
 import { useLoginMutation } from "../redux/api/UserApi";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { MessageResponse } from "../types/api-types";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [gender, setGender] = useState("");
   const [date, setDate] = useState("");
+  const navigate = useNavigate();
 
   //useLoginMutation.0 index means login api..
   const [login] = useLoginMutation();
@@ -24,13 +26,14 @@ export default function Login() {
         name: user.displayName!,
         _id: user.uid!,
         dob: date,
-        email:user.email!,
+        email: user.email!,
         gender,
         photo: user.photoURL!,
         role: "user",
       });
       if ("data" in res) {
         toast.success((res.data as MessageResponse)?.message);
+        navigate("/");
       } else {
         const error = res.error as FetchBaseQueryError;
         const message = (error.data as MessageResponse).message;

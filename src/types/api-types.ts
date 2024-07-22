@@ -61,6 +61,10 @@ export type DeleteProductParameters = {
   userId: string;
   productId: string;
 };
+export type DeleteUserParameters = {
+  adminId: string;
+  userId: string;
+};
 
 export type NewOrderParameters = {
   shippingInfo: ShippingInfo;

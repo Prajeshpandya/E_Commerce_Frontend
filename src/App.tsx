@@ -63,9 +63,7 @@ function App() {
     });
   }, []);
 
-  return loading ? (
-    <Loader />
-  ) : (
+  return (
     <Router>
       <Header user={user} />
       <Suspense fallback={<Loader />}>
