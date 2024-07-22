@@ -1,19 +1,19 @@
 import { ReactElement, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { FaTrash } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Column } from "react-table";
 import AdminSidebar from "../../components/admin/AdminSidebar";
 import TableHOC from "../../components/admin/TableHOC";
+import { SkeletonLoader } from "../../components/Loader";
 import {
   useDeleteUserMutation,
   useGetAllUsersQuery,
 } from "../../redux/api/UserApi";
-import { useSelector } from "react-redux";
-import { RootState, server } from "../../redux/store";
+import { RootState } from "../../redux/store";
 import { CustomError } from "../../types/api-types";
-import toast from "react-hot-toast";
-import { SkeletonLoader } from "../../components/Loader";
 import { responseToast } from "../../utils/features";
-import { useNavigate } from "react-router-dom";
 
 interface DataType {
   avatar: ReactElement;
@@ -72,7 +72,9 @@ const Customers = () => {
     if (data) {
       setRows(
         data?.users.map((i) => ({
-          avatar: <img src={i.photo} />,
+          avatar: (
+            <img style={{ borderRadius: "50%" }} alt={i.name} src={i.photo} />
+          ),
           name: i.name,
           email: i.email,
           gender: i.gender,

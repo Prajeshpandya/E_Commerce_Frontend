@@ -37,7 +37,7 @@ const CheckOutForm = () => {
 
   const [newOrder] = useNewOrderMutation();
 
-  console.log(cartItems.map((i)=>{console.log(i.quantity,i.name)}))
+  // console.log(cartItems.map((i)=>{console.log(i.quantity,i.name)}))
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

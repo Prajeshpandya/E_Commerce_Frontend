@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Loader from "./components/Loader";
+
 import ProtectedRoute from "./components/ProtectedRoute";
 import { auth } from "./firebase";
 import { getUser } from "./redux/api/UserApi";
@@ -23,7 +24,7 @@ const Login = lazy(() => import("./pages/Login"));
 const Orders = lazy(() => import("./pages/Orders"));
 const OrdersDetails = lazy(() => import("./pages/OrdersDetails"));
 const NotFound = lazy(() => import("./components/NotFound"));
-const CheckOut = lazy(()=>import("./pages/CheckOut") )
+const CheckOut = lazy(() => import("./pages/CheckOut"));
 
 //admin
 const Dashboard = lazy(() => import("./pages/admin/dashboard"));
@@ -52,18 +53,24 @@ function App() {
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        console.log("loggedIn");
-        //here the getUser is from fireBase that is diffrent from ourType so we made the axios api for getUser of firebase
-        const data = await getUser(user.uid);
-        dispatch(userExist(data.user));
-      } else {
-        dispatch(userNotExist());
+      try {
+        if (user) {
+          console.log("loggedIn");
+          //here the getUser is from fireBase that is diffrent from ourType so we made the axios api for getUser of firebase
+          const data = await getUser(user.uid);
+          dispatch(userExist(data.user));
+        } else {
+          dispatch(userNotExist());
+        }
+      } catch (error) {
+        console.log(error);
       }
     });
   }, []);
 
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <Router>
       <Header user={user} />
       <Suspense fallback={<Loader />}>
@@ -94,7 +101,6 @@ function App() {
             <Route path="/orders" element={<Orders />} />
             <Route path="/orders/:id" element={<OrdersDetails />} />
             <Route path="/pay" element={<CheckOut />} />
-
           </Route>
 
           {/* admin routes */}

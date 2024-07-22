@@ -67,7 +67,7 @@ const Transaction = () => {
           user: i.user.name,
           amount: i.total,
           discount: i.discount,
-          quantity: i.orderItems.map((i)=>i.quantity),
+          quantity: i.orderItems.map((i) => i.quantity),
           status: (
             <span
               className={
