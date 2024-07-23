@@ -80,3 +80,32 @@ export type Stats = {
   };
   latestTransaction: LatestTransaction[];
 };
+
+export type Charts = {
+  orderFullfillmentRatio: {
+    processing: number;
+    shipping: number;
+    delivered: number;
+  };
+  categoryCount: Record<string, number>[];
+  stockAvailability: {
+    inStock: number;
+    outOfStock: number;
+  };
+  revenueDistribution: {
+    netMargin: number;
+    totalDiscount: number;
+    productionCost: number;
+    burnt: number;
+    marketingCost: number;
+  };
+  adminCustomer: {
+    admin: number;
+    customer: number;
+  };
+  usersAgeGroup: {
+    teen: number;
+    adult: number;
+    old: number;
+  };
+};
