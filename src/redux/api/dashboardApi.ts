@@ -1,10 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   BarResponse,
+  CreateCouponParameters,
   LineResponse,
+  MessageResponse,
   PieResponse,
   StatsResponse,
 } from "../../types/api-types";
+import axios from "axios";
 
 export const dashboardApi = createApi({
   reducerPath: "dashboardApi",
@@ -31,6 +34,10 @@ export const dashboardApi = createApi({
       query: (id) => `line?id=${id}`,
       keepUnusedDataFor: 0, //for disable caching bcz it can not be updated on diffrent apis tags
     }),
+    // createCoupon: builder.mutation<MessageResponse, CreateCouponParameters>({
+    //   query: (id) => `line?id=${id}`,
+    //   keepUnusedDataFor: 0,
+    // }),
   }),
 });
 
@@ -39,3 +46,5 @@ export const { useBarQuery, useLineQuery, usePieQuery, useStatsQuery } =
 
 //useLazyBarQuery means when we trigger that then it call req and get data.
 //   in useBarQuery there are direct get the data!
+
+

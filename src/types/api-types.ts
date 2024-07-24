@@ -109,6 +109,10 @@ export type UpdateOrderParameters = {
   userId: string;
   orderId: string;
 };
+export type CreateCouponParameters = {
+  coupon: string;
+  amount: number;
+};
 
 export type MyOrdersResponse = {
   success: boolean;
