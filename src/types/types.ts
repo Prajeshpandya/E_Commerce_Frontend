@@ -87,7 +87,7 @@ export type Charts = {
     shipping: number;
     delivered: number;
   };
-  categoryCount: Record<string, number>[];
+  categoryStockCount: Record<string, number>[];
   stockAvailability: {
     inStock: number;
     outOfStock: number;

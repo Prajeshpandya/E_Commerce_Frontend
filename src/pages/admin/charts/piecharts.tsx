@@ -51,13 +51,17 @@ const PieCharts = () => {
             <section>
               <div>
                 <DoughnutChart
-                  labels={charts.categoryCount.map((i) => Object.keys(i)[0])}
-                  data={charts.categoryCount.map((i) => Object.values(i)[0])}
-                  backgroundColor={charts.categoryCount.map(
+                  labels={charts.categoryStockCount.map(
+                    (i) => Object.keys(i)[0]
+                  )}
+                  data={charts.categoryStockCount.map(
+                    (i) => Object.values(i)[0]
+                  )}
+                  backgroundColor={charts.categoryStockCount.map(
                     (i) =>
-                      `hsl(${Object.values(i)[0] *  4}, ${
-                        Object.values(i)[0]
-                      }%, 50%)`
+                      `hsl(${Object.values(i)[0] * Math.random() * 4},${
+                        Math.random() * Object.values(i)[0]
+                      }%,50%)`
                   )}
                   legends={false}
                   offset={[0, 0, 0, 80]}
