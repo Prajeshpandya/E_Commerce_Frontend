@@ -6,6 +6,7 @@ import { usePieQuery } from "../../../redux/api/dashboardApi";
 import toast from "react-hot-toast";
 import { SkeletonLoader } from "../../../components/Loader";
 import { CustomError } from "../../../types/api-types";
+import { Navigate } from "react-router-dom";
 
 const PieCharts = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
@@ -17,6 +18,7 @@ const PieCharts = () => {
   if (isError) {
     const err = error as CustomError;
     toast.error(err.data.message);
+    return <Navigate to={"/admin/dashboard"}/>
   }
 
   return (
@@ -32,11 +34,13 @@ const PieCharts = () => {
               <div>
                 <PieChart
                   labels={["Processing", "Shipped", "Delivered"]}
-                  data={[
-                    charts.orderFullfillmentRatio.processing,
-                    charts.orderFullfillmentRatio.shipping,
-                    charts.orderFullfillmentRatio.delivered,
-                  ]}
+                  data={
+                    [
+                      charts.orderFullfillmentRatio.processing,
+                      charts.orderFullfillmentRatio.shipping,
+                      charts.orderFullfillmentRatio.delivered,
+                    ] || []
+                  }
                   backgroundColor={[
                     `hsl(110,80%, 80%)`,
                     `hsl(110,80%, 50%)`,
@@ -54,9 +58,10 @@ const PieCharts = () => {
                   labels={charts.categoryStockCount.map(
                     (i) => Object.keys(i)[0]
                   )}
-                  data={charts.categoryStockCount.map(
-                    (i) => Object.values(i)[0]
-                  )}
+                  data={
+                    charts.categoryStockCount.map((i) => Object.values(i)[0]) ||
+                    []
+                  }
                   backgroundColor={charts.categoryStockCount.map(
                     (i) =>
                       `hsl(${Object.values(i)[0] * Math.random() * 4},${
@@ -74,10 +79,12 @@ const PieCharts = () => {
               <div>
                 <DoughnutChart
                   labels={["In Stock", "Out Of Stock"]}
-                  data={[
-                    charts.stockAvailability.inStock,
-                    charts.stockAvailability.outOfStock,
-                  ]}
+                  data={
+                    [
+                      charts.stockAvailability.inStock,
+                      charts.stockAvailability.outOfStock,
+                    ] || []
+                  }
                   backgroundColor={["hsl(269,80%,40%)", "rgb(53, 162, 255)"]}
                   legends={false}
                   offset={[0, 80]}
@@ -97,13 +104,15 @@ const PieCharts = () => {
                     "Production Cost",
                     "Net Margin",
                   ]}
-                  data={[
-                    charts.revenueDistribution.marketingCost,
-                    charts.revenueDistribution.totalDiscount,
-                    charts.revenueDistribution.burnt,
-                    charts.revenueDistribution.productionCost,
-                    charts.revenueDistribution.netMargin,
-                  ]}
+                  data={
+                    [
+                      charts.revenueDistribution.marketingCost,
+                      charts.revenueDistribution.totalDiscount,
+                      charts.revenueDistribution.burnt,
+                      charts.revenueDistribution.productionCost,
+                      charts.revenueDistribution.netMargin,
+                    ] || []
+                  }
                   backgroundColor={[
                     "hsl(110,80%,40%)",
                     "hsl(19,80%,40%)",
@@ -126,11 +135,13 @@ const PieCharts = () => {
                     "Adult (20-40)",
                     "Older (above 40)",
                   ]}
-                  data={[
-                    charts.usersAgeGroup.teen,
-                    charts.usersAgeGroup.adult,
-                    charts.usersAgeGroup.old,
-                  ]}
+                  data={
+                    [
+                      charts.usersAgeGroup.teen,
+                      charts.usersAgeGroup.adult,
+                      charts.usersAgeGroup.old,
+                    ] || []
+                  }
                   backgroundColor={[
                     `hsl(10, ${80}%, 80%)`,
                     `hsl(10, ${80}%, 50%)`,
@@ -146,10 +157,12 @@ const PieCharts = () => {
               <div>
                 <DoughnutChart
                   labels={["Admin", "Customers"]}
-                  data={[
-                    charts.adminCustomer.admin,
-                    charts.adminCustomer.customer,
-                  ]}
+                  data={
+                    [
+                      charts.adminCustomer.admin,
+                      charts.adminCustomer.customer,
+                    ] || []
+                  }
                   backgroundColor={[`hsl(335, 100%, 38%)`, "hsl(44, 98%, 50%)"]}
                   offset={[0, 50]}
                 />

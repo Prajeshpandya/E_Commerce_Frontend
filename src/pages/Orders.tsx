@@ -58,11 +58,11 @@ export default function Orders() {
     if (data) {
       setRows(
         data?.orders.map((i) => ({
-          name:i.orderItems.map((i)=>i.name),
+          name: i.orderItems.map((i) => i.name),
           _id: i._id,
           amount: i.total,
           discount: i.discount,
-          quantity: i.orderItems.map((i)=>i.quantity),
+          quantity: i.orderItems.map((i) => i.quantity),
           status: (
             <span
               className={
@@ -76,7 +76,7 @@ export default function Orders() {
               {i.status}
             </span>
           ),
-          action: <Link to={`/${i._id}`}>Manage</Link>,
+          action: <Link to={`/admin/transaction/${i._id}`}>Manage</Link>,
         }))
       );
     }

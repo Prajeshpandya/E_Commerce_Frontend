@@ -12,6 +12,7 @@ import { useStatsQuery } from "../../redux/api/dashboardApi";
 import { RootState } from "../../redux/store";
 import { CustomError } from "../../types/api-types";
 import { getLastMonths } from "../../utils/features";
+import { Navigate } from "react-router-dom";
 const userImg =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJxA5cTf-5dh5Eusm0puHbvAhOrCRPtckzjA&usqp";
 
@@ -25,6 +26,8 @@ const {last6Months} = getLastMonths()
   if (isError) {
     const err = error as CustomError;
     toast.error(err.data.message);
+    return <Navigate to={"/"}/>
+
   }
   return (
     <div className="admin-container">
@@ -74,8 +77,8 @@ const {last6Months} = getLastMonths()
               <div className="revenue-chart">
                 <h2>Revenue & Transaction</h2>
                 <BarChart
-                  data_2={stats.chart.revenue}
-                  data_1={stats.chart.order}
+                  data_2={stats.chart.revenue || []}
+                  data_1={stats.chart.order || []}
                   title_1="Revenue"
                   labels={last6Months}
                   title_2="Transaction"

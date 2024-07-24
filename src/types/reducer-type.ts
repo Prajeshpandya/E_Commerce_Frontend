@@ -1,5 +1,5 @@
 import { User } from "firebase/auth";
-import { CartItems, ShippingInfo } from "./types";
+import { CartItem, ShippingInfo } from "./types";
 
 export interface UserReducerInitialState {
   user: User | null;
@@ -7,12 +7,11 @@ export interface UserReducerInitialState {
 }
 export interface CartReducerInitialState {
   loading: boolean;
-  cartItems:CartItems[];
+  cartItems: CartItem[];
   subTotal: number;
   tax: number;
   shippingCharges: number;
   discount: number;
   total: number;
-  shippingInfo:ShippingInfo
-
+  shippingInfo: ShippingInfo;
 }

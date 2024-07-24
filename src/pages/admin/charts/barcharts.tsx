@@ -31,8 +31,8 @@ const Barcharts = () => {
           <>
             <section>
               <BarChart
-                data_2={charts.product}
-                data_1={charts.user}
+                data_2={charts.product || []}
+                data_1={charts.user || []}
                 title_1="Products"
                 title_2="Users"
                 labels={last6Months}
@@ -45,7 +45,7 @@ const Barcharts = () => {
             <section>
               <BarChart
                 horizontal={true}
-                data_1={charts.order}
+                data_1={charts.order || []}
                 data_2={[]}
                 title_1="Orders"
                 title_2=""
