@@ -81,7 +81,7 @@ export type Stats = {
   latestTransaction: LatestTransaction[];
 };
 
-export type Charts = {
+export type Pie = {
   orderFullfillmentRatio: {
     processing: number;
     shipping: number;
@@ -108,4 +108,16 @@ export type Charts = {
     adult: number;
     old: number;
   };
+};
+
+export type Bar = {
+  product: number[];
+  user: number[];
+  order: number[];
+};
+export type Line = {
+  product: number[];
+  user: number[];
+  discount: number[];
+  revenue: number[];
 };
