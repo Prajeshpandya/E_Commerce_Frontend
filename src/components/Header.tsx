@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   FaSearch,
   FaShoppingBag,
@@ -12,13 +12,13 @@ import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import toast from "react-hot-toast";
 
-
 interface PropsType {
   user: User | null;
 }
 
 function Header({ user }: PropsType) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
   const logoutHandler = async () => {
     try {
@@ -28,6 +28,25 @@ function Header({ user }: PropsType) {
       toast.error("Signed Out Failed!");
     }
   };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dialogRef.current && !dialogRef.current.contains(event.target as Node)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener("click", handleClickOutside);
+    } else {
+      document.removeEventListener("click", handleClickOutside);
+    }
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [isOpen]);
 
   return (
     <nav className="header">
@@ -42,19 +61,22 @@ function Header({ user }: PropsType) {
       </NavLink>
       {user?._id ? (
         <>
-          <button onClick={() => setIsOpen((prev) => !prev)}>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsOpen((prev) => !prev);
+            }}
+          >
             <FaUser />
           </button>
-          <dialog  open={isOpen}>
+          <dialog ref={dialogRef} open={isOpen}>
             <div>
               {user.role === "admin" && (
                 <NavLink onClick={() => setIsOpen(false)} to="/admin/dashboard">
-                  {" "}
                   Admin
                 </NavLink>
               )}
               <NavLink onClick={() => setIsOpen(false)} to="/orders">
-                {" "}
                 Orders
               </NavLink>
             </div>
