@@ -50,7 +50,9 @@ const Coupon = () => {
     await new Promise((resolve) => setTimeout(resolve, 0));
     const res = await createCoupon({ amount, coupon: result });
     console.log(res);
+    setAmount(0)
     toast.success(res.message);
+
   };
 
   const createCoupon = async ({

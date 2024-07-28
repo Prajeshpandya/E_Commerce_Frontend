@@ -14,6 +14,7 @@ import { resetCart } from "../redux/reducer/cartReducer";
 import { RootState } from "../redux/store";
 import { NewOrderParameters } from "../types/api-types";
 import { responseToast } from "../utils/features";
+import OrderDetailPay from "../components/OrderDetail_Pay";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_KEY);
 
@@ -96,7 +97,7 @@ const CheckOutForm = () => {
   };
 
   return (
-    <div className="checkout_container">
+    <div className="checkout_container" >
       <form onSubmit={submitHandler}>
         <PaymentElement />
         <button type="submit" disabled={isProcessing}>
@@ -114,13 +115,16 @@ export default function CheckOut() {
   if (!clientSecret) return <Navigate to={"/shipping"} />;
 
   return (
+    <div className="detail_pay_checkout">
     <Elements
       options={{
         clientSecret,
       }}
       stripe={stripePromise}
     >
+      <OrderDetailPay/>
       <CheckOutForm />
     </Elements>
+    </div>
   );
 }
