@@ -9,6 +9,7 @@ import { useMyOrdersQuery } from "../redux/api/OrderApi";
 import { CustomError } from "../types/api-types";
 import { UserReducerInitialState } from "../types/reducer-type";
 import { formatDateTime } from "../utils/features";
+import { FaFileInvoice } from "react-icons/fa";
 
 type DataType = {
   _id: string;
@@ -16,7 +17,8 @@ type DataType = {
   quantity: number[];
   discount: number;
   TimeDate: any;
-  updateAt:any;
+  updateAt: any;
+  invoice: ReactElement;
   status: ReactElement;
   action: ReactElement;
 };
@@ -44,6 +46,10 @@ const column: Column<DataType>[] = [
   {
     Header: "Status",
     accessor: "status",
+  },
+  {
+    Header: "Invoice",
+    accessor: "invoice",
   },
   {
     Header: "TimeDate",
@@ -89,7 +95,12 @@ export default function Orders() {
             </span>
           ),
           TimeDate: formatDateTime(i.createdAt),
-          updateAt:formatDateTime(i.updatedAt),
+          updateAt: formatDateTime(i.updatedAt),
+          invoice: (
+            <Link to={`/invoice/${i._id}`}>
+              <FaFileInvoice />
+            </Link>
+          ),
           action: <Link to={`/admin/transaction/${i._id}`}>Manage</Link>,
         }))
       );

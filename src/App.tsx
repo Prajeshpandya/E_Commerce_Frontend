@@ -11,6 +11,7 @@ import { auth } from "./firebase";
 import { getUser } from "./redux/api/UserApi";
 import { userExist, userNotExist } from "./redux/reducer/userReducer";
 import { UserReducerInitialState } from "./types/reducer-type";
+import InvoicePrint from "./components/InvoicePrint";
 
 //normal import components
 // import Home from "./pages/Home";
@@ -100,6 +101,7 @@ function App() {
             <Route path="/shipping" element={<Shipping />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/orders/:id" element={<OrdersDetails />} />
+            <Route path="/invoice/:id" element={<InvoicePrint />} />
             <Route path="/pay" element={<CheckOut />} />
           </Route>
 
