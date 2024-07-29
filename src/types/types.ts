@@ -48,6 +48,8 @@ export type Order = {
     name: string;
     _id: string;
   };
+  createdAt:Date;
+  updatedAt:Date;
   _id: string;
 };
 

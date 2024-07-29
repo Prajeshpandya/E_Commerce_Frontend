@@ -8,12 +8,15 @@ import { SkeletonLoader } from "../components/Loader";
 import { useMyOrdersQuery } from "../redux/api/OrderApi";
 import { CustomError } from "../types/api-types";
 import { UserReducerInitialState } from "../types/reducer-type";
+import { formatDateTime } from "../utils/features";
 
 type DataType = {
   _id: string;
   amount: number;
   quantity: number[];
   discount: number;
+  TimeDate: any;
+  updateAt:any;
   status: ReactElement;
   action: ReactElement;
 };
@@ -43,6 +46,14 @@ const column: Column<DataType>[] = [
     accessor: "status",
   },
   {
+    Header: "TimeDate",
+    accessor: "TimeDate",
+  },
+  {
+    Header: "LastUpdate",
+    accessor: "updateAt",
+  },
+  {
     Header: "Action",
     accessor: "action",
   },
@@ -56,8 +67,9 @@ export default function Orders() {
 
   useEffect(() => {
     if (data) {
+      const reversedArray = [...data?.orders!].reverse();
       setRows(
-        data?.orders.map((i) => ({
+        reversedArray!.map((i) => ({
           name: i.orderItems.map((i) => i.name),
           _id: i._id,
           amount: i.total,
@@ -76,6 +88,8 @@ export default function Orders() {
               {i.status}
             </span>
           ),
+          TimeDate: formatDateTime(i.createdAt),
+          updateAt:formatDateTime(i.updatedAt),
           action: <Link to={`/admin/transaction/${i._id}`}>Manage</Link>,
         }))
       );
