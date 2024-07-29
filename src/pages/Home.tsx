@@ -7,6 +7,11 @@ import { useLatestProductsQuery } from "../redux/api/ProductApi";
 import { addToCart } from "../redux/reducer/cartReducer";
 import { CartItem } from "../types/types";
 import { CartReducerInitialState } from "../types/reducer-type";
+// import puma from "../assets/puma.mp4";
+import home2 from "../assets/home_2.jpg";
+import home3 from "../assets/home_new_1.jpg";
+import home4 from "../assets/hritik.webp";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const { data, isError, isLoading } = useLatestProductsQuery("");
@@ -34,9 +39,34 @@ export default function Home() {
   if (isError) {
     toast.error("Can not fetched the Products ");
   }
+
+  const photos = [home2, home3, home4];
+  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentPhotoIndex((prevIndex) => (prevIndex + 1) % photos.length);
+    }, 4000); // Change image every 3 seconds
+
+    return () => clearInterval(interval);
+  }, [photos.length]);
+
+  const currentPhoto = photos[currentPhotoIndex];
+
   return (
     <div className="home">
-      <section></section>
+      {/* <section>  */}
+      <img src={currentPhoto} alt="" />
+      {/* </section> */}
+      {/* <video
+        src={puma}
+        autoPlay
+        loop
+        muted
+        playsInline
+        controlsList="nodownload"
+        style={{ height: "19rem", width: "100%" }}
+      ></video> */}
 
       <h1>
         Latest Products
