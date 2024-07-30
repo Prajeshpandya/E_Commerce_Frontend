@@ -5,13 +5,13 @@ import { SkeletonLoader } from "../components/Loader";
 import ProductCard from "../components/ProductCard";
 import { useLatestProductsQuery } from "../redux/api/ProductApi";
 import { addToCart } from "../redux/reducer/cartReducer";
-import { CartItem } from "../types/types";
 import { CartReducerInitialState } from "../types/reducer-type";
-// import puma from "../assets/puma.mp4";
+import { CartItem } from "../types/types";
+import { useEffect, useState } from "react";
 import home2 from "../assets/home_2.jpg";
 import home3 from "../assets/home_new_1.jpg";
 import home4 from "../assets/hritik.webp";
-import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 export default function Home() {
   const { data, isError, isLoading } = useLatestProductsQuery("");
@@ -55,18 +55,15 @@ export default function Home() {
 
   return (
     <div className="home">
-      {/* <section>  */}
-      <img src={currentPhoto} alt="" />
-      {/* </section> */}
-      {/* <video
-        src={puma}
-        autoPlay
-        loop
-        muted
-        playsInline
-        controlsList="nodownload"
-        style={{ height: "19rem", width: "100%" }}
-      ></video> */}
+      <motion.img
+        key={currentPhoto}
+        initial={{ scaleZ: 50, opacity: 0 }}
+        animate={{ scaleZ: 100, opacity: 100 }}
+        exit={{ scaleZ: 50, opacity: 0 }}
+        transition={{ duration: 1,ease:"linear", }}
+        src={currentPhoto}
+        alt=""
+      />
 
       <h1>
         Latest Products

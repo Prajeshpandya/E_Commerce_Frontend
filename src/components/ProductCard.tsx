@@ -1,14 +1,14 @@
 import { FaPlus } from "react-icons/fa";
 import { server } from "../redux/store";
-import { CartItems } from "../types/types";
-
+import { CartItem } from "../types/types";
+import { motion } from "framer-motion";
 type ProductProps = {
   productId: string;
   photo: string;
   name: string;
   price: number;
   stock: number;
-  handler: (cartItem: CartItems) => string | undefined;
+  handler: (cartItem: CartItem) => string | undefined;
 };
 
 export default function ProductCard({
@@ -26,7 +26,13 @@ export default function ProductCard({
   return (
     //uploads\966fa9ef-87a9-4343-a774-a56ce65aa5dc.png
 
-    <div className="product_card">
+    <motion.div
+      className="product_card"
+      initial={{ scaleZ: 50, opacity: 0 }}
+      transition={{ duration: 1, ease: "linear" }}
+      animate={{ scaleZ: 100, opacity: 100 }}
+      exit={{ scaleZ: 50, opacity: 0 }}
+    >
       <img src={`${server}/${photo}`} alt={name} />
 
       <p>{formattedName}</p>
@@ -47,6 +53,6 @@ export default function ProductCard({
           <FaPlus />
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 }
