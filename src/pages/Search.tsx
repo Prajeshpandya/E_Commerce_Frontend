@@ -11,6 +11,7 @@ import { CartItem } from "../types/types";
 import { addToCart } from "../redux/reducer/cartReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { CartReducerInitialState } from "../types/reducer-type";
+import Modal from "../components/Modal";
 
 export default function Search() {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ export default function Search() {
   const [category, setCategory] = useState("");
   const [maxPrice, setMaxPrice] = useState(1000000);
   const [page, setPage] = useState(1);
+  const [showModal, setShowModal] = useState(false);
 
   const {
     data: categoriesResponse,
@@ -63,6 +65,10 @@ export default function Search() {
     }
   };
 
+  const onClose = () => {
+    setShowModal(false);
+  };
+
   return (
     <div className="product_search">
       <aside>
@@ -103,6 +109,11 @@ export default function Search() {
       </aside>
       <main>
         <h1>Products</h1>
+        {showModal && (
+          <Modal onClose={onClose} title="Title">
+            <h1>Hi</h1>
+          </Modal>
+        )}
         <input
           type="text"
           placeholder="Search By Name..."
@@ -127,6 +138,7 @@ export default function Search() {
           <div className="search_product_list">
             {searchProductResponse?.products.map((i) => (
               <ProductCard
+                setShowModal={setShowModal}
                 key={i._id}
                 productId={i._id}
                 name={i.name}

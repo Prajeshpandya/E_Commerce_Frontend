@@ -12,6 +12,7 @@ import home2 from "../assets/home_2.jpg";
 import home3 from "../assets/home_new_1.jpg";
 import home4 from "../assets/hritik.webp";
 import { motion } from "framer-motion";
+import Modal from "../components/Modal";
 
 export default function Home() {
   const { data, isError, isLoading } = useLatestProductsQuery("");
@@ -42,6 +43,7 @@ export default function Home() {
 
   const photos = [home2, home3, home4];
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -53,6 +55,10 @@ export default function Home() {
 
   const currentPhoto = photos[currentPhotoIndex];
 
+  const onClose = () => {
+    setShowModal(false);
+  };
+
   return (
     <div className="home">
       <motion.img
@@ -60,11 +66,15 @@ export default function Home() {
         initial={{ scaleZ: 50, opacity: 0 }}
         animate={{ scaleZ: 100, opacity: 100 }}
         exit={{ scaleZ: 50, opacity: 0 }}
-        transition={{ duration: 1,ease:"linear", }}
+        transition={{ duration: 1, ease: "linear" }}
         src={currentPhoto}
         alt=""
       />
-
+      {showModal && (
+        <Modal onClose={onClose} title="Title">
+          <h1>Hi</h1>
+        </Modal>
+      )}
       <h1>
         Latest Products
         <Link to="/search" className="findmore">
@@ -77,6 +87,7 @@ export default function Home() {
         ) : (
           data?.products.map((i) => (
             <ProductCard
+            setShowModal={setShowModal}
               key={i._id}
               productId={i._id}
               name={i.name}

@@ -406,6 +406,26 @@ $color3: rgb(0, 104, 136);
   animation: skeleton 1.5s infinite;
 }
 
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 9;
+}
+
+.modal {
+  top: 10%;
+  border-radius: 6px;
+  padding: 1.5rem;
+  width: 30rem;
+  max-width: 90%;
+  z-index: 10;
+  margin: auto;
+}
+
 @keyframes loading-animation {
   to {
     transform: rotateZ(360deg);

@@ -9,6 +9,7 @@ type ProductProps = {
   price: number;
   stock: number;
   handler: (cartItem: CartItem) => string | undefined;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function ProductCard({
@@ -18,6 +19,7 @@ export default function ProductCard({
   price,
   stock,
   handler,
+  setShowModal,
 }: ProductProps) {
   const fullPhotoUrl = `${server}/${photo}`;
 
@@ -27,6 +29,7 @@ export default function ProductCard({
     //uploads\966fa9ef-87a9-4343-a774-a56ce65aa5dc.png
 
     <motion.div
+      onClick={() => setShowModal(true)}
       className="product_card"
       initial={{ scaleZ: 50, opacity: 0 }}
       transition={{ duration: 1, ease: "linear" }}
@@ -39,16 +42,17 @@ export default function ProductCard({
       <span>₹{price}</span>
       <div>
         <button
-          onClick={() =>
-            handler({
+          onClick={(e) => {
+            e.stopPropagation();
+            return handler({
               productId,
               photo,
               name,
               price,
               stock,
               quantity: 1,
-            })
-          }
+            });
+          }}
         >
           <FaPlus />
         </button>
