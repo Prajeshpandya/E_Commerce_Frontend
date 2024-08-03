@@ -13,9 +13,12 @@ import home3 from "../assets/home_new_1.jpg";
 import home4 from "../assets/hritik.webp";
 import { motion } from "framer-motion";
 import Modal from "../components/Modal";
+import DetailModal from "../components/DetailModal";
+
 
 export default function Home() {
   const { data, isError, isLoading } = useLatestProductsQuery("");
+
 
   const dispatch = useDispatch();
 
@@ -72,7 +75,7 @@ export default function Home() {
       />
       {showModal && (
         <Modal onClose={onClose} title="Title">
-          <h1>Hi</h1>
+          <DetailModal />
         </Modal>
       )}
       <h1>
@@ -87,7 +90,7 @@ export default function Home() {
         ) : (
           data?.products.map((i) => (
             <ProductCard
-            setShowModal={setShowModal}
+              setShowModal={setShowModal}
               key={i._id}
               productId={i._id}
               name={i.name}

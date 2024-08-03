@@ -111,7 +111,7 @@ export default function Search() {
         <h1>Products</h1>
         {showModal && (
           <Modal onClose={onClose} title="Title">
-            <h1>Hi</h1>
+
           </Modal>
         )}
         <input

@@ -8,6 +8,7 @@ type Modal = {
 };
 
 export default function Modal({ title, children, onClose }: any) {
+
   return createPortal(
     <>
       <div className="backdrop" onClick={onClose} />
@@ -35,9 +36,7 @@ export default function Modal({ title, children, onClose }: any) {
         open
         className="modal"
       >
-        <h2>{title}</h2>
-        {children}
-        
+             {children}
       </motion.dialog>
     </>,
     document.getElementById("modal")
