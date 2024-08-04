@@ -72,9 +72,9 @@ export default function Search() {
 
   const { modal } = useSelector((state: RootState) => state.modalReducer);
 
-  const handleClick = (productId: string) => {
-    dispatch(showModal());
-    navigate(`${productId}`, { state: productId });
+
+  const handleClick = (product) => {
+    dispatch(showModal(product));
   };
 
   return (

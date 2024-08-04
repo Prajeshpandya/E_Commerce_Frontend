@@ -1,5 +1,5 @@
 import { User } from "firebase/auth";
-import { CartItem, ShippingInfo } from "./types";
+import { CartItem, Product, ShippingInfo } from "./types";
 
 export interface UserReducerInitialState {
   user: User | null;
@@ -7,6 +7,7 @@ export interface UserReducerInitialState {
 }
 export interface ModalReducerInitialState {
   modal: boolean;
+  selectedProduct: Product | null;
 }
 export interface CartReducerInitialState {
   loading: boolean;

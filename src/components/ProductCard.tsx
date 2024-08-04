@@ -2,6 +2,9 @@ import { motion } from "framer-motion";
 import { FaPlus } from "react-icons/fa";
 import { server } from "../redux/store";
 import { CartItem } from "../types/types";
+import { showModal } from "../redux/reducer/modalReducer";
+import { useDispatch } from "react-redux";
+
 type ProductProps = {
   productId: string;
   photo: string;
@@ -9,7 +12,8 @@ type ProductProps = {
   price: number;
   stock: number;
   handler: (cartItem: CartItem) => string | undefined;
-  handleClick: (productId: string) => void; // Update this line
+  
+  handleClick: (product: any) => void; // Accept the handleClick prop
 };
 
 export default function ProductCard({
@@ -19,24 +23,27 @@ export default function ProductCard({
   price,
   stock,
   handler,
-  handleClick
+  handleClick, // Destructure handleClick
+
+
 }: ProductProps) {
-  const fullPhotoUrl = `${server}/${photo}`;
+
+  // const fullPhotoUrl = `${server}/${photo}`;
   // const navigate = useNavigate();
 
   const formattedName = name.length > 30 ? `${name.slice(0, 30)}...` : name;
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // const handleClick = () => {
-  //   dispatch(showModal());
-  //   navigate(`${productId}`, { state: productId });
-  // };
+ 
+  const handleCardClick = () => {
+    handleClick({ productId, photo, name, price, stock });
+  };
 
   return (
     //uploads\966fa9ef-87a9-4343-a774-a56ce65aa5dc.png
 
     <motion.div
-      onClick={() => handleClick(productId)}
+      onClick={handleCardClick}
       className="product_card"
       initial={{ scaleZ: 50, opacity: 0 }}
       transition={{ duration: 1, ease: "linear" }}

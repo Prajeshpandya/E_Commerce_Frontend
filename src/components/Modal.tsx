@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
 import { createPortal } from "react-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../redux/reducer/modalReducer";
 import DetailModal from "./DetailModal";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../redux/store";
 
 type Modal = {
   title: string;
@@ -16,9 +17,15 @@ export default function Modal({ title, children }: any) {
 
   const navigate = useNavigate();
 
+  const { modal, selectedProduct } = useSelector(
+    (state: RootState) => state.modalReducer
+  );
+
+  if (!modal || !selectedProduct) return null;
+
   const close = () => {
     dispatch(closeModal());
-    navigate(-1);
+    // navigate(-1);
   };
 
   return createPortal(
@@ -48,9 +55,9 @@ export default function Modal({ title, children }: any) {
         open
         className="modal"
       >
-        <DetailModal />
+        <DetailModal product={selectedProduct} />
 
-        {children}
+        {/* {children} */}
       </motion.dialog>
     </>,
     document.getElementById("modal")

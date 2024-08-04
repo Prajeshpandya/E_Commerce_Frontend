@@ -3,13 +3,15 @@ import { ModalReducerInitialState } from "../../types/reducer-type";
 
 export const modalReducer = createSlice({
   name: "modalReducer",
-  initialState: <ModalReducerInitialState>{ modal: false },
+  initialState: <ModalReducerInitialState>{ modal: false, selectedProduct: {} },
   reducers: {
-    showModal: (state) => {
+    showModal: (state, action) => {
       state.modal = true;
+      state.selectedProduct = action.payload;
     },
     closeModal: (state) => {
       state.modal = false;
+      state.selectedProduct = null;
     },
   },
 });

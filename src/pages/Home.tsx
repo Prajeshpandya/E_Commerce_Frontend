@@ -62,9 +62,8 @@ export default function Home() {
   const currentPhoto = photos[currentPhotoIndex];
 
 
-  const handleClick = (productId:string) => {
-    dispatch(showModal());
-    navigate(`${productId}`, { state: productId });
+  const handleClick = (product) => {
+    dispatch(showModal(product));
   };
 
   return (

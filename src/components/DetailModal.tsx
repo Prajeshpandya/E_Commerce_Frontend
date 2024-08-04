@@ -1,18 +1,19 @@
 import ReactStars from "react-rating-stars-component";
 
-export default function DetailModal() {
+export default function DetailModal({ product }: any) {
   const firstExample = {
     size: 30,
     value: 2.5,
     edit: false,
   };
+  console.log(product);
   return (
     <div className="product">
       <div className="product__photo-container">
         <img src="./camera.jpeg" alt={"name"} className="product__photo" />
       </div>
       <div className="product__details">
-        <h2 className="product__name">{"name"}</h2>
+        <h2 className="product__name">{product.name}</h2>
         <div className="product__ratings">
           <span className="product__stars">
             <ReactStars {...firstExample} />
