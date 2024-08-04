@@ -1,27 +1,25 @@
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { SkeletonLoader } from "../components/Loader";
-import ProductCard from "../components/ProductCard";
-import { useLatestProductsQuery } from "../redux/api/ProductApi";
-import { addToCart } from "../redux/reducer/cartReducer";
-import { CartReducerInitialState } from "../types/reducer-type";
-import { CartItem } from "../types/types";
-import { useEffect, useState } from "react";
 import home2 from "../assets/home_2.jpg";
 import home3 from "../assets/home_new_1.jpg";
 import home4 from "../assets/hritik.webp";
-import { motion } from "framer-motion";
+import { SkeletonLoader } from "../components/Loader";
 import Modal from "../components/Modal";
-import DetailModal from "../components/DetailModal";
-import { RootState } from "../redux/store";
+import ProductCard from "../components/ProductCard";
+import { useLatestProductsQuery } from "../redux/api/ProductApi";
+import { addToCart } from "../redux/reducer/cartReducer";
 import { showModal } from "../redux/reducer/modalReducer";
+import { RootState } from "../redux/store";
+import { CartReducerInitialState } from "../types/reducer-type";
+import { CartItem, Product } from "../types/types";
 
 export default function Home() {
   const { data, isError, isLoading } = useLatestProductsQuery("");
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const { modal } = useSelector((state: RootState) => state.modalReducer);
 
@@ -61,8 +59,7 @@ export default function Home() {
 
   const currentPhoto = photos[currentPhotoIndex];
 
-
-  const handleClick = (product) => {
+  const handleClick = (product: Product) => {
     dispatch(showModal(product));
   };
 
@@ -77,10 +74,7 @@ export default function Home() {
         src={currentPhoto}
         alt=""
       />
-      {modal && (
-        <Modal title="Title">
-        </Modal>
-      )}
+      {modal && <Modal title="Title"></Modal>}
       <h1>
         Latest Products
         <Link to="/search" className="findmore">

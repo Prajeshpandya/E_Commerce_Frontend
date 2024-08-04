@@ -12,7 +12,6 @@ type ProductProps = {
   price: number;
   stock: number;
   handler: (cartItem: CartItem) => string | undefined;
-  
   handleClick: (product: any) => void; // Accept the handleClick prop
 };
 
@@ -24,17 +23,9 @@ export default function ProductCard({
   stock,
   handler,
   handleClick, // Destructure handleClick
-
-
 }: ProductProps) {
-
-  // const fullPhotoUrl = `${server}/${photo}`;
-  // const navigate = useNavigate();
-
   const formattedName = name.length > 30 ? `${name.slice(0, 30)}...` : name;
-  const dispatch = useDispatch();
 
- 
   const handleCardClick = () => {
     handleClick({ productId, photo, name, price, stock });
   };

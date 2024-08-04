@@ -25,7 +25,6 @@ export default function Modal({ title, children }: any) {
 
   const close = () => {
     dispatch(closeModal());
-    // navigate(-1);
   };
 
   return createPortal(
@@ -56,8 +55,6 @@ export default function Modal({ title, children }: any) {
         className="modal"
       >
         <DetailModal product={selectedProduct} />
-
-        {/* {children} */}
       </motion.dialog>
     </>,
     document.getElementById("modal")
