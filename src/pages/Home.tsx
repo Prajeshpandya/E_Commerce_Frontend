@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SkeletonLoader } from "../components/Loader";
 import ProductCard from "../components/ProductCard";
 import { useLatestProductsQuery } from "../redux/api/ProductApi";
@@ -14,13 +14,16 @@ import home4 from "../assets/hritik.webp";
 import { motion } from "framer-motion";
 import Modal from "../components/Modal";
 import DetailModal from "../components/DetailModal";
-
+import { RootState } from "../redux/store";
+import { showModal } from "../redux/reducer/modalReducer";
 
 export default function Home() {
   const { data, isError, isLoading } = useLatestProductsQuery("");
 
-
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { modal } = useSelector((state: RootState) => state.modalReducer);
 
   const { cartItems } = useSelector(
     (state: { cartReducer: CartReducerInitialState }) => state.cartReducer
@@ -46,7 +49,7 @@ export default function Home() {
 
   const photos = [home2, home3, home4];
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -58,8 +61,10 @@ export default function Home() {
 
   const currentPhoto = photos[currentPhotoIndex];
 
-  const onClose = () => {
-    setShowModal(false);
+
+  const handleClick = (productId:string) => {
+    dispatch(showModal());
+    navigate(`${productId}`, { state: productId });
   };
 
   return (
@@ -73,9 +78,8 @@ export default function Home() {
         src={currentPhoto}
         alt=""
       />
-      {showModal && (
-        <Modal onClose={onClose} title="Title">
-          <DetailModal />
+      {modal && (
+        <Modal title="Title">
         </Modal>
       )}
       <h1>
@@ -90,7 +94,7 @@ export default function Home() {
         ) : (
           data?.products.map((i) => (
             <ProductCard
-              setShowModal={setShowModal}
+              handleClick={handleClick}
               key={i._id}
               productId={i._id}
               name={i.name}

@@ -1,7 +1,7 @@
+import { motion } from "framer-motion";
 import { FaPlus } from "react-icons/fa";
 import { server } from "../redux/store";
 import { CartItem } from "../types/types";
-import { motion } from "framer-motion";
 type ProductProps = {
   productId: string;
   photo: string;
@@ -9,7 +9,7 @@ type ProductProps = {
   price: number;
   stock: number;
   handler: (cartItem: CartItem) => string | undefined;
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  handleClick: (productId: string) => void; // Update this line
 };
 
 export default function ProductCard({
@@ -19,17 +19,24 @@ export default function ProductCard({
   price,
   stock,
   handler,
-  setShowModal,
+  handleClick
 }: ProductProps) {
   const fullPhotoUrl = `${server}/${photo}`;
+  // const navigate = useNavigate();
 
   const formattedName = name.length > 30 ? `${name.slice(0, 30)}...` : name;
+  // const dispatch = useDispatch();
+
+  // const handleClick = () => {
+  //   dispatch(showModal());
+  //   navigate(`${productId}`, { state: productId });
+  // };
 
   return (
     //uploads\966fa9ef-87a9-4343-a774-a56ce65aa5dc.png
 
     <motion.div
-      onClick={() => setShowModal(true)}
+      onClick={() => handleClick(productId)}
       className="product_card"
       initial={{ scaleZ: 50, opacity: 0 }}
       transition={{ duration: 1, ease: "linear" }}

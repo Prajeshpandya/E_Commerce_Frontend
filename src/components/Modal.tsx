@@ -1,17 +1,29 @@
 import { motion } from "framer-motion";
 import { createPortal } from "react-dom";
+import { useDispatch } from "react-redux";
+import { closeModal } from "../redux/reducer/modalReducer";
+import DetailModal from "./DetailModal";
+import { useNavigate } from "react-router-dom";
 
 type Modal = {
   title: string;
   children: any;
-  onClose: () => void;
+  // onClose: () => void;
 };
 
-export default function Modal({ title, children, onClose }: any) {
+export default function Modal({ title, children }: any) {
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  const close = () => {
+    dispatch(closeModal());
+    navigate(-1);
+  };
 
   return createPortal(
     <>
-      <div className="backdrop" onClick={onClose} />
+      <div className="backdrop" onClick={close} />
 
       {/* Ok, so this modal is not part of dom so we can't apply directly the motion props to its parents we have to apply it ti actual modal as we did it here! */}
       <motion.dialog
@@ -36,7 +48,9 @@ export default function Modal({ title, children, onClose }: any) {
         open
         className="modal"
       >
-             {children}
+        <DetailModal />
+
+        {children}
       </motion.dialog>
     </>,
     document.getElementById("modal")

@@ -15,7 +15,6 @@ export default function DetailModal() {
         <h2 className="product__name">{"name"}</h2>
         <div className="product__ratings">
           <span className="product__stars">
-            {" "}
             <ReactStars {...firstExample} />
           </span>
           <span className="product__reviews">({"numOfReviews"} reviews)</span>

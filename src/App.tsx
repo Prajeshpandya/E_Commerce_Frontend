@@ -12,6 +12,8 @@ import { getUser } from "./redux/api/UserApi";
 import { userExist, userNotExist } from "./redux/reducer/userReducer";
 import { UserReducerInitialState } from "./types/reducer-type";
 import InvoicePrint from "./components/InvoicePrint";
+import DetailModal from "./components/DetailModal";
+import Modal from "./components/Modal";
 
 //normal import components
 // import Home from "./pages/Home";
@@ -80,6 +82,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/:id" element={<Modal />} />
 
           {/* Not Logged in Route */}
 

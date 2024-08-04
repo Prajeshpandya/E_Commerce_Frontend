@@ -12,6 +12,10 @@ import { addToCart } from "../redux/reducer/cartReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { CartReducerInitialState } from "../types/reducer-type";
 import Modal from "../components/Modal";
+import { RootState } from "../redux/store";
+import DetailModal from "../components/DetailModal";
+import { showModal } from "../redux/reducer/modalReducer";
+import { useNavigate } from "react-router-dom";
 
 export default function Search() {
   const dispatch = useDispatch();
@@ -20,7 +24,6 @@ export default function Search() {
   const [category, setCategory] = useState("");
   const [maxPrice, setMaxPrice] = useState(1000000);
   const [page, setPage] = useState(1);
-  const [showModal, setShowModal] = useState(false);
 
   const {
     data: categoriesResponse,
@@ -28,6 +31,8 @@ export default function Search() {
     isError,
     error,
   } = useAllCategoriesQuery("");
+
+  const navigate = useNavigate();
 
   const {
     data: searchProductResponse,
@@ -65,8 +70,11 @@ export default function Search() {
     }
   };
 
-  const onClose = () => {
-    setShowModal(false);
+  const { modal } = useSelector((state: RootState) => state.modalReducer);
+
+  const handleClick = (productId: string) => {
+    dispatch(showModal());
+    navigate(`${productId}`, { state: productId });
   };
 
   return (
@@ -109,9 +117,9 @@ export default function Search() {
       </aside>
       <main>
         <h1>Products</h1>
-        {showModal && (
-          <Modal onClose={onClose} title="Title">
-
+        {modal && (
+          <Modal title="Title">
+            <DetailModal />
           </Modal>
         )}
         <input
@@ -138,7 +146,6 @@ export default function Search() {
           <div className="search_product_list">
             {searchProductResponse?.products.map((i) => (
               <ProductCard
-                setShowModal={setShowModal}
                 key={i._id}
                 productId={i._id}
                 name={i.name}
@@ -146,6 +153,7 @@ export default function Search() {
                 stock={i.stock}
                 handler={addToCartHandler}
                 photo={i.photo}
+                handleClick={handleClick}
               />
             ))}
           </div>
