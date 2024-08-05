@@ -86,6 +86,12 @@ export type UpdateProductParameters = {
   productId: string;
   formData: FormData;
 };
+export type NewReviewParameters = {
+  comment: string;
+  rating: number;
+  productId: string;
+  userId: string;
+};
 export type DeleteProductParameters = {
   userId: string;
   productId: string;

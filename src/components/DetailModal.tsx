@@ -1,26 +1,40 @@
+import { ChangeEvent, useState } from "react";
+import toast from "react-hot-toast";
 import ReactStars from "react-rating-stars-component";
+import { useDispatch, useSelector } from "react-redux";
+import { useNewReviewMutation } from "../redux/api/ProductApi";
+import { addToCart } from "../redux/reducer/cartReducer";
 import { RootState, server } from "../redux/store";
 import { CartItem, Product } from "../types/types";
-import toast from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../redux/reducer/cartReducer";
-import { useNavigate } from "react-router-dom";
+import { responseToast } from "../utils/features";
 
 export default function DetailModal({ product }: Product) {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { cartItems } = useSelector((state: RootState) => state.cartReducer);
+  const { user } = useSelector((state: RootState) => state.userReducer);
+
+  const [startRating, setStarRating] = useState(0);
+  const [comment, setComment] = useState("");
+
+  const [newReview] = useNewReviewMutation();
 
   const ratings = product.ratings || 0;
   const numOfReviews = product.numOfReviews;
-  console.log(numOfReviews);
 
   const firstExample = {
     size: 30,
     value: ratings,
     edit: false,
   };
-  console.log(product);
+
+  const getRatings = {
+    size: 30,
+    onChange: (newValue: number) => {
+      setStarRating(newValue);
+    },
+    edit: true,
+  };
+  console.log(startRating);
 
   const addToCartHandler = (cartItem: CartItem) => {
     if (cartItem.stock < 1) return toast.error("Out of Stock!");
@@ -42,6 +56,22 @@ export default function DetailModal({ product }: Product) {
     price: product.price,
     stock: product.stock,
     quantity: 1,
+  };
+
+  const submitHandler = async (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    
+      const res = await newReview({
+        comment,
+        rating: startRating,
+        productId: product._id,
+        userId: user?._id!,
+      });
+      // toast.success(res.data?.message!);
+   
+      responseToast(res, null, null);
+
   };
 
   return (
@@ -82,10 +112,17 @@ export default function DetailModal({ product }: Product) {
         <div className="product__review">
           <input
             type="text"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
             placeholder="Add your review"
             className="product__review-input"
           />
-          <button className="product__review-submit">Submit</button>
+
+          <ReactStars {...getRatings} />
+
+          <button className="product__review-submit" onClick={submitHandler}>
+            Submit
+          </button>
         </div>
       </div>
     </div>

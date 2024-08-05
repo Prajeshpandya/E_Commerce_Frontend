@@ -5,6 +5,7 @@ import {
   DeleteProductParameters,
   MessageResponse,
   NewProductParameters,
+  NewReviewParameters,
   SearchProductParameters,
   SearchProductResponse,
   SingleProductResponse,
@@ -73,6 +74,14 @@ export const productApi = createApi({
       }),
       invalidatesTags: ["product"],
     }),
+    newReview: builder.mutation<MessageResponse, NewReviewParameters>({
+      query: ({ comment, rating, productId, userId }) => ({
+        url: `newreview?productId=${productId}&userId=${userId}`,
+        body: { comment, rating },
+        method: "POST",
+        invalidatesTags: ["product"],
+      }),
+    }),
   }),
 });
 
@@ -84,5 +93,6 @@ export const {
   useNewProductMutation,
   useProductDetailsQuery,
   useUpdateProductMutation,
-  useDeleteProductMutation
+  useDeleteProductMutation,
+  useNewReviewMutation,
 } = productApi;
