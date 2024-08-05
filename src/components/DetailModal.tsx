@@ -42,8 +42,8 @@ export default function DetailModal({ product }: Product) {
         </div>
         <button className="product__add-to-cart">Add to Cart</button>
         <div className="product__description">
-          <p>{product.description}</p>
-        </div> 
+          <p>Description : {product.description}</p>
+        </div>
         <div className="product__review">
           <input
             type="text"

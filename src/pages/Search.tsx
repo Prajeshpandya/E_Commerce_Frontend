@@ -151,8 +151,12 @@ export default function Search() {
                 name={i.name}
                 price={i.price}
                 stock={i.stock}
-                handler={addToCartHandler}
                 photo={i.photo}
+                category={i.category}
+                ratings={i.ratings}
+                description={i.description}
+                numOfReviews={i.numOfReviews}
+                handler={addToCartHandler}
                 handleClick={handleClick}
               />
             ))}
