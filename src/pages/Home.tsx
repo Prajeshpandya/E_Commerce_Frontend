@@ -94,6 +94,10 @@ export default function Home() {
               price={i.price}
               stock={i.stock}
               handler={addToCartHandler}
+              category={i.category}
+              ratings={i.ratings}
+              description={i.description}
+              numOfReviews={i.numOfReviews}
               photo={i.photo}
             />
           ))

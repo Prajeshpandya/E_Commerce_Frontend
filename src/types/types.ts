@@ -16,6 +16,9 @@ export type Product = {
   price: number;
   photo: string;
   _id: string;
+  description: string;
+  ratings: number;
+  numOfReviews:number;
 };
 export type ShippingInfo = {
   address: string;
@@ -48,8 +51,8 @@ export type Order = {
     name: string;
     _id: string;
   };
-  createdAt:Date;
-  updatedAt:Date;
+  createdAt: Date;
+  updatedAt: Date;
   _id: string;
 };
 

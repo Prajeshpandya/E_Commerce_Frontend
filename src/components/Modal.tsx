@@ -2,20 +2,16 @@ import { motion } from "framer-motion";
 import { createPortal } from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../redux/reducer/modalReducer";
-import DetailModal from "./DetailModal";
-import { useNavigate } from "react-router-dom";
 import { RootState } from "../redux/store";
+import DetailModal from "./DetailModal";
 
 type Modal = {
   title: string;
   children: any;
-  // onClose: () => void;
 };
 
-export default function Modal({ title, children }: any) {
+export default function Modal() {
   const dispatch = useDispatch();
-
-  const navigate = useNavigate();
 
   const { modal, selectedProduct } = useSelector(
     (state: RootState) => state.modalReducer

@@ -7,7 +7,7 @@ export interface UserReducerInitialState {
 }
 export interface ModalReducerInitialState {
   modal: boolean;
-  selectedProduct: Product | null;
+  selectedProduct: Product;
 }
 export interface CartReducerInitialState {
   loading: boolean;

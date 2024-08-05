@@ -2,8 +2,6 @@ import { motion } from "framer-motion";
 import { FaPlus } from "react-icons/fa";
 import { server } from "../redux/store";
 import { CartItem } from "../types/types";
-import { showModal } from "../redux/reducer/modalReducer";
-import { useDispatch } from "react-redux";
 
 type ProductProps = {
   productId: string;
@@ -11,6 +9,10 @@ type ProductProps = {
   name: string;
   price: number;
   stock: number;
+  ratings: number;
+  category:string;
+  description: string;
+  numOfReviews:number;
   handler: (cartItem: CartItem) => string | undefined;
   handleClick: (product: any) => void; // Accept the handleClick prop
 };
@@ -23,11 +25,27 @@ export default function ProductCard({
   stock,
   handler,
   handleClick, // Destructure handleClick
+  ratings,
+  description,
+  category,
+  numOfReviews
 }: ProductProps) {
   const formattedName = name.length > 30 ? `${name.slice(0, 30)}...` : name;
 
+  const _id = productId;
+
   const handleCardClick = () => {
-    handleClick({ productId, photo, name, price, stock });
+    handleClick({
+      _id,
+      photo,
+      name,
+      category,
+      price,
+      stock,
+      ratings,
+      description,
+      numOfReviews
+    });
   };
 
   return (
