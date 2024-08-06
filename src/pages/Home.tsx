@@ -63,6 +63,7 @@ export default function Home() {
     dispatch(showModal(product));
   };
 
+
   return (
     <div className="home">
       <motion.img

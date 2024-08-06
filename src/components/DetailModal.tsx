@@ -7,6 +7,8 @@ import { addToCart } from "../redux/reducer/cartReducer";
 import { RootState, server } from "../redux/store";
 import { CartItem, Product } from "../types/types";
 import { responseToast } from "../utils/features";
+import { doRefresh } from "../redux/reducer/refreshReducer";
+import { closeModal } from "../redux/reducer/modalReducer";
 
 export default function DetailModal({ product }: Product) {
   const dispatch = useDispatch();
@@ -34,7 +36,6 @@ export default function DetailModal({ product }: Product) {
     },
     edit: true,
   };
-  console.log(startRating);
 
   const addToCartHandler = (cartItem: CartItem) => {
     if (cartItem.stock < 1) return toast.error("Out of Stock!");
@@ -61,17 +62,17 @@ export default function DetailModal({ product }: Product) {
   const submitHandler = async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 
-    
-      const res = await newReview({
-        comment,
-        rating: startRating,
-        productId: product._id,
-        userId: user?._id!,
-      });
-      // toast.success(res.data?.message!);
-   
-      responseToast(res, null, null);
+    const res = await newReview({
+      comment,
+      rating: startRating,
+      productId: product._id,
+      userId: user?._id!,
+    });
+    setComment(""); // Clear the input field
+    setStarRating(0);
 
+    responseToast(res, null, null);
+    dispatch(closeModal());
   };
 
   return (

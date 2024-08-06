@@ -18,6 +18,7 @@ export const productApi = createApi({
     baseUrl: `${import.meta.env.VITE_SERVER}/api/v1/product/`,
   }),
   tagTypes: ["product"],
+
   endpoints: (builder) => ({
     latestProducts: builder.query<AllProductsResponse, string>({
       query: () => "latest",
@@ -48,6 +49,7 @@ export const productApi = createApi({
     }),
     productDetails: builder.query<SingleProductResponse, "string">({
       query: (id) => id,
+      providesTags: ["product"],
     }),
     updateProduct: builder.mutation<MessageResponse, UpdateProductParameters>({
       query: ({ formData, userId, productId }) => ({
@@ -79,8 +81,8 @@ export const productApi = createApi({
         url: `newreview?productId=${productId}&userId=${userId}`,
         body: { comment, rating },
         method: "POST",
-        invalidatesTags: ["product"],
       }),
+      invalidatesTags: ["product"],
     }),
   }),
 });
