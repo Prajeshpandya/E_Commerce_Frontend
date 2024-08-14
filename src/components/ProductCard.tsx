@@ -10,9 +10,9 @@ type ProductProps = {
   price: number;
   stock: number;
   ratings: number;
-  category:string;
+  category: string;
   description: string;
-  numOfReviews:number;
+  numOfReviews: number;
   handler: (cartItem: CartItem) => string | undefined;
   handleClick: (product: any) => void; // Accept the handleClick prop
 };
@@ -28,7 +28,7 @@ export default function ProductCard({
   ratings,
   description,
   category,
-  numOfReviews
+  numOfReviews,
 }: ProductProps) {
   const formattedName = name.length > 30 ? `${name.slice(0, 30)}...` : name;
 
@@ -44,9 +44,11 @@ export default function ProductCard({
       stock,
       ratings,
       description,
-      numOfReviews
+      numOfReviews,
     });
   };
+
+ 
 
   return (
     //uploads\966fa9ef-87a9-4343-a774-a56ce65aa5dc.png

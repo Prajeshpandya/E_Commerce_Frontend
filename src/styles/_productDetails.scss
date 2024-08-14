@@ -30,6 +30,12 @@
     padding: 20px;
     display: flex;
     flex-direction: column;
+
+    >.rating_container {
+      max-height: 200px;
+      overflow-y: auto;
+      background-color: #1B61B5;
+    }
   }
 
   &__name {
@@ -116,9 +122,19 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    margin-left: 0.3rem;
 
     &:hover {
       background-color: #144a8d;
     }
   }
+
+  &__rating {
+    gap: 1rem;
+    display: flex;
+
+  }
+
+
+
 }

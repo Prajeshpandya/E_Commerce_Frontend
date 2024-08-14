@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../redux/reducer/modalReducer";
 import { RootState } from "../redux/store";
 import DetailModal from "./DetailModal";
+import { useGetReviewsQuery } from "../redux/api/ProductApi";
+import { useEffect } from "react";
 
 type Modal = {
   title: string;
@@ -22,6 +24,12 @@ export default function Modal() {
   const close = () => {
     dispatch(closeModal());
   };
+
+
+  const { data, isError, isLoading, error } = useGetReviewsQuery(
+    selectedProduct._id
+  );
+
 
   return createPortal(
     <>
@@ -50,7 +58,7 @@ export default function Modal() {
         open
         className="modal"
       >
-        <DetailModal product={selectedProduct} />
+        <DetailModal product={selectedProduct} reviews={data} />
       </motion.dialog>
     </>,
     document.getElementById("modal")

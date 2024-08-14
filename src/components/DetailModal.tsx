@@ -4,13 +4,19 @@ import ReactStars from "react-rating-stars-component";
 import { useDispatch, useSelector } from "react-redux";
 import { useNewReviewMutation } from "../redux/api/ProductApi";
 import { addToCart } from "../redux/reducer/cartReducer";
+import { closeModal } from "../redux/reducer/modalReducer";
 import { RootState, server } from "../redux/store";
+import { GetReviewsResponse } from "../types/api-types";
 import { CartItem, Product } from "../types/types";
 import { responseToast } from "../utils/features";
-import { doRefresh } from "../redux/reducer/refreshReducer";
-import { closeModal } from "../redux/reducer/modalReducer";
 
-export default function DetailModal({ product }: Product) {
+export default function DetailModal({
+  product,
+  reviews,
+}: {
+  product: Product;
+  reviews: GetReviewsResponse;
+}) {
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state: RootState) => state.cartReducer);
   const { user } = useSelector((state: RootState) => state.userReducer);
@@ -75,6 +81,8 @@ export default function DetailModal({ product }: Product) {
     dispatch(closeModal());
   };
 
+  console.log(reviews);
+
   return (
     <div className="product">
       <div className="product__photo-container">
@@ -124,6 +132,15 @@ export default function DetailModal({ product }: Product) {
           <button className="product__review-submit" onClick={submitHandler}>
             Submit
           </button>
+        </div>
+        <div className="rating_container">
+          {reviews?.reviews?.map((reviews) => (
+            <div className="product__rating">
+              <p>{reviews.user.name}</p>
+              <p>{reviews.comment}</p>
+              <p>{reviews.rating}</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>

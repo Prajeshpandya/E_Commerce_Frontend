@@ -6,6 +6,7 @@ import {
   Order,
   Pie,
   Product,
+  Review,
   ShippingInfo,
   Stats,
   User,
@@ -46,6 +47,10 @@ export type SearchProductResponse = {
   success: boolean;
   products: Product[];
   totalPage: number;
+};
+export type GetReviewsResponse = {
+  success: boolean;
+  reviews: Review[];
 };
 
 export type StatsResponse = {

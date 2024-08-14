@@ -3,6 +3,7 @@ import {
   AllProductsResponse,
   CategoriesResponse,
   DeleteProductParameters,
+  GetReviewsResponse,
   MessageResponse,
   NewProductParameters,
   NewReviewParameters,
@@ -47,7 +48,7 @@ export const productApi = createApi({
       },
       providesTags: ["product"],
     }),
-    productDetails: builder.query<SingleProductResponse, "string">({
+    productDetails: builder.query<SingleProductResponse, string>({
       query: (id) => id,
       providesTags: ["product"],
     }),
@@ -84,6 +85,10 @@ export const productApi = createApi({
       }),
       invalidatesTags: ["product"],
     }),
+    getReviews: builder.query<GetReviewsResponse, string>({
+      query: (productId) => `getreviews?productId=${productId}`,
+      providesTags: ["product"],
+    }),
   }),
 });
 
@@ -97,4 +102,5 @@ export const {
   useUpdateProductMutation,
   useDeleteProductMutation,
   useNewReviewMutation,
+  useGetReviewsQuery
 } = productApi;

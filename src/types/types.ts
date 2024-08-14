@@ -18,7 +18,7 @@ export type Product = {
   _id: string;
   description: string;
   ratings: number;
-  numOfReviews:number;
+  numOfReviews: number;
 };
 export type ShippingInfo = {
   address: string;
@@ -34,6 +34,23 @@ export type CartItem = {
   price: number;
   quantity: number;
   stock: number;
+};
+
+// "_id": "66ac656d0b829611792ba7af",
+// "comment": "Its nice Product",
+// "rating": 4,
+// "user": "fsO9flQQAZglJa0j8l53T2JEqB52",
+// "product": "66ac65380b829611792ba7ab",
+// "createdAt": "2024-08-02T04:49:49.541Z",
+// "updatedAt": "2024-08-02T04:49:49.541Z",
+// "__v": 0
+
+export type Review = {
+  _id: string;
+  comment: string;
+  rating: number;
+  user: { _id: string; name: string };
+  product: string;
 };
 
 export type OrderItem = Omit<CartItem, "stock"> & { _id: string };
