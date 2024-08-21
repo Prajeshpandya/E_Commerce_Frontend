@@ -4,6 +4,7 @@ import { server } from "../redux/store";
 import { CartItem } from "../types/types";
 
 type CartItemsprops = {
+  //cartItemProps
   cartItem: CartItem;
   incrementHandler: (cartItem: CartItem) => void;
   deccrementHandler: (cartItem: CartItem) => void;
