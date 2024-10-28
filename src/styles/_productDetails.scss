@@ -3,7 +3,8 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
-  height: 85%;
+  // height: 85%;
+  height: 92%;
   width: 100%;
   margin: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -34,7 +35,9 @@
     >.rating_container {
       max-height: 200px;
       overflow-y: auto;
-      background-color: #1B61B5;
+      // background-color: #1B61B5;
+      margin-top: 1rem;
+
     }
   }
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import {
   useAllCategoriesQuery,
@@ -31,6 +31,10 @@ export default function Search() {
     isError,
     error,
   } = useAllCategoriesQuery("");
+
+  useEffect(() => {
+    setPage(1);
+  }, [search, sort, category, maxPrice]);
 
   const navigate = useNavigate();
 

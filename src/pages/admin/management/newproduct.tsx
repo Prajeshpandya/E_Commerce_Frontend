@@ -18,6 +18,7 @@ const NewProduct = () => {
   const [stock, setStock] = useState<number>(1);
   const [photoPrev, setPhotoPrev] = useState<string>("");
   const [photo, setPhoto] = useState<File>();
+  const [description, setDescription] = useState<string>("");
 
   const [newProduct] = useNewProductMutation();
 
@@ -39,11 +40,12 @@ const NewProduct = () => {
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!name || !category || !price || !stock || !photo) toast.error("Enter All Fields !");
+    if (!name || !category || !price || !stock || !photo || !description) toast.error("Enter All Fields !");
 
     const formData = new FormData();
 
     formData.set("name", name);
+    formData.set("description", description);
     formData.set("price", price.toString());
     formData.set("stock", stock.toString());
     formData.set("photo", photo!);
@@ -72,6 +74,16 @@ const NewProduct = () => {
                 placeholder="Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div>
+              <label>Description</label>
+              <input
+                type="text"
+                required
+                placeholder="Description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
             </div>
             <div>

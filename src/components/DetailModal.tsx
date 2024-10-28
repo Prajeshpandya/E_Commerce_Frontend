@@ -9,6 +9,8 @@ import { RootState, server } from "../redux/store";
 import { GetReviewsResponse } from "../types/api-types";
 import { CartItem, Product } from "../types/types";
 import { responseToast } from "../utils/features";
+import { MdOutlineStarPurple500 } from "react-icons/md";
+
 
 export default function DetailModal({
   product,
@@ -136,9 +138,10 @@ export default function DetailModal({
         <div className="rating_container">
           {reviews?.reviews?.map((reviews) => (
             <div className="product__rating">
-              <p>{reviews.user.name}</p>
+              <p>{reviews.user.name} : </p>
               <p>{reviews.comment}</p>
-              <p>{reviews.rating}</p>
+              <p style={{alignItems:"center",display:"flex"}}>{reviews.rating}  <MdOutlineStarPurple500 fill="#FFD700" size={19}/>
+              </p>
             </div>
           ))}
         </div>
