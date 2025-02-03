@@ -90,12 +90,6 @@ export default function DetailModal({
   return (
     <div className="product">
       <div className="product__photo-container">
-        {/* Selected big image */}
-        {/* <img
-          src={selectedImage}
-          alt={product.name}
-          className="product__photo"
-        /> */}
         <div className="product__photo-container">
           <ZoomImage
             src={selectedImage}
@@ -104,7 +98,6 @@ export default function DetailModal({
           />
         </div>
 
-        {/* Thumbnails */}
         <div className="product__thumbnails">
           {product.photos.map((photo, index) => (
             <img
