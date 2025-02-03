@@ -10,7 +10,7 @@ import { GetReviewsResponse } from "../types/api-types";
 import { CartItem, Product } from "../types/types";
 import { responseToast } from "../utils/features";
 import { MdOutlineStarPurple500 } from "react-icons/md";
-
+import ZoomImage from "./ZoomImage";
 
 export default function DetailModal({
   product,
@@ -22,6 +22,7 @@ export default function DetailModal({
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state: RootState) => state.cartReducer);
   const { user } = useSelector((state: RootState) => state.userReducer);
+  const [selectedImage, setSelectedImage] = useState(product.photos[0]?.url);
 
   const [startRating, setStarRating] = useState(0);
   const [comment, setComment] = useState("");
@@ -83,16 +84,38 @@ export default function DetailModal({
     dispatch(closeModal());
   };
 
-  console.log(reviews);
+  // console.log(reviews);
+  console.log("product", product);
 
   return (
     <div className="product">
       <div className="product__photo-container">
-        <img
-          src={`${server}/${product.photo}`}
+        {/* Selected big image */}
+        {/* <img
+          src={selectedImage}
           alt={product.name}
           className="product__photo"
-        />
+        /> */}
+        <div className="product__photo-container">
+          <ZoomImage
+            src={selectedImage}
+            alt={product.name}
+            className="product__photo"
+          />
+        </div>
+
+        {/* Thumbnails */}
+        <div className="product__thumbnails">
+          {product.photos.map((photo, index) => (
+            <img
+              key={index}
+              src={photo.url}
+              alt={`Thumbnail ${index}`}
+              className="product__thumbnail"
+              onClick={() => setSelectedImage(photo.url)}
+            />
+          ))}
+        </div>
       </div>
       <div className="product__details">
         <h2 className="product__name">{product.name}</h2>
@@ -140,7 +163,9 @@ export default function DetailModal({
             <div className="product__rating">
               <p>{reviews.user.name} : </p>
               <p>{reviews.comment}</p>
-              <p style={{alignItems:"center",display:"flex"}}>{reviews.rating}  <MdOutlineStarPurple500 fill="#FFD700" size={19}/>
+              <p style={{ alignItems: "center", display: "flex" }}>
+                {reviews.rating}{" "}
+                <MdOutlineStarPurple500 fill="#FFD700" size={19} />
               </p>
             </div>
           ))}

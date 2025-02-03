@@ -206,7 +206,7 @@ $color3: rgb(0, 104, 136);
     background-color: white;
     padding: 1rem;
     z-index: 10;
-    overflow-y: hidden;
+    overflow-y: scroll;
 
     &::-webkit-scrollbar {
       display: none;
@@ -418,15 +418,27 @@ $color3: rgb(0, 104, 136);
 }
 
 .modal {
+  // top: 10%;
+  // border-radius: 6px;
+  // padding: 1.5rem;
+  // width: 69rem;
+  // max-width: 90%;
+  // z-index: 10;
+  // height: 78%;
+  // margin: auto;
+  // display: flex;
+
   top: 10%;
   border-radius: 6px;
   padding: 1.5rem;
-  width: 69rem;
+  width: 80rem;
   max-width: 90%;
   z-index: 10;
-  height: 78%;
+  height: 83%;
   margin: auto;
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @keyframes loading-animation {
@@ -453,4 +465,38 @@ $color3: rgb(0, 104, 136);
   100% {
     opacity: 0.6;
   }
+}
+
+
+
+
+
+
+
+
+// .zoom-image {
+//   width: max-content;
+// }
+
+// img {
+//   display: block;
+// }
+
+.image-box {
+  width: 100%;
+  height: 100%;
+}
+
+.image-detail {
+  display: none;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5);
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  pointer-events: none;
+  border: 2px solid red;
+  max-width: 500px;
+  max-height: 500px;
 }

@@ -6,6 +6,7 @@ import { useNewProductMutation } from "../../../redux/api/ProductApi";
 import { responseToast } from "../../../utils/features";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useFileHandler } from "6pp";
 
 const NewProduct = () => {
   const navigate = useNavigate();
@@ -16,31 +17,17 @@ const NewProduct = () => {
   const [category, setCategory] = useState<string>("");
   const [price, setPrice] = useState<number>(1000);
   const [stock, setStock] = useState<number>(1);
-  const [photoPrev, setPhotoPrev] = useState<string>("");
-  const [photo, setPhoto] = useState<File>();
   const [description, setDescription] = useState<string>("");
 
   const [newProduct] = useNewProductMutation();
-
-  const changeImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const file: File | undefined = e.target.files?.[0];
-
-    const reader: FileReader = new FileReader();
-
-    if (file) {
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        if (typeof reader.result === "string") {
-          setPhotoPrev(reader.result);
-          setPhoto(file);
-        }
-      };
-    }
-  };
+  const photos = useFileHandler("multiple", 10, 5);
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!name || !category || !price || !stock || !photo || !description) toast.error("Enter All Fields !");
+    if (!name || !category || !price || !stock || !description)
+      toast.error("Enter All Fields !");
+
+    if (!photos.file || photos.file.length === 0) return;
 
     const formData = new FormData();
 
@@ -48,8 +35,11 @@ const NewProduct = () => {
     formData.set("description", description);
     formData.set("price", price.toString());
     formData.set("stock", stock.toString());
-    formData.set("photo", photo!);
     formData.set("category", category);
+
+    photos.file?.forEach((file) => {
+      formData.append("photos", file);
+    });
 
     const res = await newProduct({
       id: user?._id!,
@@ -119,10 +109,20 @@ const NewProduct = () => {
 
             <div>
               <label>Photo</label>
-              <input type="file" required onChange={changeImageHandler} />
+              <input
+                type="file"
+                multiple
+                required
+                onChange={photos.changeHandler}
+              />
             </div>
-
-            {photoPrev && <img src={photoPrev} alt="New Image" />}
+            {photos.error && <p>{photos.error}</p>}
+            {photos.preview &&
+              photos.preview.map((img, i) => (
+                <>
+                  <img key={i} style={{display:"flex"}} src={img} alt="New Image" />
+                </>
+              ))}
             <button type="submit">Create</button>
           </form>
         </article>

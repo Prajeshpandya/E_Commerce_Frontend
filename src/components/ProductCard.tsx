@@ -5,7 +5,7 @@ import { CartItem } from "../types/types";
 
 type ProductProps = {
   productId: string;
-  photo: string;
+  photos: [] | string;
   name: string;
   price: number;
   stock: number;
@@ -14,30 +14,29 @@ type ProductProps = {
   description: string;
   numOfReviews: number;
   handler: (cartItem: CartItem) => string | undefined;
-  handleClick: (product: any) => void; // Accept the handleClick prop
+  handleClick: (product: any) => void;
 };
 
 export default function ProductCard({
   productId,
-  photo,
+  photos,
   name,
   price,
   stock,
   handler,
-  handleClick, // Destructure handleClick
+  handleClick,
   ratings,
   description,
   category,
   numOfReviews,
 }: ProductProps) {
   const formattedName = name.length > 30 ? `${name.slice(0, 30)}...` : name;
-
   const _id = productId;
 
   const handleCardClick = () => {
     handleClick({
       _id,
-      photo,
+      photos,
       name,
       category,
       price,
@@ -47,8 +46,6 @@ export default function ProductCard({
       numOfReviews,
     });
   };
-
- 
 
   return (
     //uploads\966fa9ef-87a9-4343-a774-a56ce65aa5dc.png
@@ -61,7 +58,10 @@ export default function ProductCard({
       animate={{ scaleZ: 100, opacity: 100 }}
       exit={{ scaleZ: 50, opacity: 0 }}
     >
-      <img src={`${server}/${photo}`} alt={name} />
+      <img
+        src={Array.isArray(photos) && photos.length > 0 ? photos[0].url : ""}
+        alt={name}
+      />
 
       <p>{formattedName}</p>
       <span>₹{price}</span>
@@ -71,7 +71,7 @@ export default function ProductCard({
             e.stopPropagation();
             return handler({
               productId,
-              photo,
+              photos,
               name,
               price,
               stock,

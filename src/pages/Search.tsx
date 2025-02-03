@@ -7,7 +7,7 @@ import {
 import { CustomError } from "../types/api-types";
 import toast from "react-hot-toast";
 import { SkeletonLoader } from "../components/Loader";
-import { CartItem } from "../types/types";
+import { CartItem, Product } from "../types/types";
 import { addToCart } from "../redux/reducer/cartReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { CartReducerInitialState } from "../types/reducer-type";
@@ -35,8 +35,6 @@ export default function Search() {
   useEffect(() => {
     setPage(1);
   }, [search, sort, category, maxPrice]);
-
-  const navigate = useNavigate();
 
   const {
     data: searchProductResponse,
@@ -77,7 +75,7 @@ export default function Search() {
   const { modal } = useSelector((state: RootState) => state.modalReducer);
 
 
-  const handleClick = (product) => {
+  const handleClick = (product:Product) => {
     dispatch(showModal(product));
   };
 
@@ -155,7 +153,7 @@ export default function Search() {
                 name={i.name}
                 price={i.price}
                 stock={i.stock}
-                photo={i.photo}
+                photos={i.photos}
                 category={i.category}
                 ratings={i.ratings}
                 description={i.description}

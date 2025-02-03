@@ -60,9 +60,9 @@ export default function Home() {
   const currentPhoto = photos[currentPhotoIndex];
 
   const handleClick = (product: Product) => {
+    console.log("product", product);
     dispatch(showModal(product));
   };
-
 
   return (
     <div className="home">
@@ -99,7 +99,7 @@ export default function Home() {
               ratings={i.ratings}
               description={i.description}
               numOfReviews={i.numOfReviews}
-              photo={i.photo}
+              photos={i.photos}
             />
           ))
         )}

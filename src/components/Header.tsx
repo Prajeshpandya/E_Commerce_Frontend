@@ -11,6 +11,8 @@ import { User } from "../types/types";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 interface PropsType {
   user: User | null;
@@ -19,6 +21,8 @@ interface PropsType {
 function Header({ user }: PropsType) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
+
+  const { cartItems } = useSelector((state: RootState) => state.cartReducer);
 
   const logoutHandler = async () => {
     try {
@@ -30,7 +34,10 @@ function Header({ user }: PropsType) {
   };
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (dialogRef.current && !dialogRef.current.contains(event.target as Node)) {
+    if (
+      dialogRef.current &&
+      !dialogRef.current.contains(event.target as Node)
+    ) {
       setIsOpen(false);
     }
   };
@@ -58,6 +65,23 @@ function Header({ user }: PropsType) {
       </NavLink>
       <NavLink onClick={() => setIsOpen(false)} to={"/cart"}>
         <FaShoppingBag />
+          <div
+            style={{
+              position: "absolute",
+              backgroundColor: "black",
+              borderRadius: "100%",
+              width: "20px",
+              height: "20px",
+              color: "white",
+              textAlign: "center",
+              top: "5px",
+              right: "41px",
+              fontSize: "small",
+              fontWeight: "500",
+            }}
+          >
+            {cartItems.length}
+          </div>
       </NavLink>
       {user?._id ? (
         <>
